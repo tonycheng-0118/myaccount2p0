@@ -1,0 +1,2 @@
+name,date,category,type,expense,income,source,status,location,tag,note
+Test_manual,2020_12_01,,Breakfast,0,0,/home/tonychenglx/pwa/homeproj/GitHub/myaccount2p0/TRUNK/dat/manual/new_item_example.csv,Valid,HOME,['TEST_ONLY'],{'Note': 'Test!!!'}

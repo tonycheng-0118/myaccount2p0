@@ -22,8 +22,8 @@ class map_item:
     def chk_file(self,file_in):
         if not os.path.isfile(file_in):
             raise TypeError("No such file!!")
-        if not os.path.isfile(self.file_out):
-            raise TypeError("No such file!!")
+        # if not os.path.isfile(self.file_out):
+            # raise TypeError("No such file!!")
         
         self.file_in = file_in 
         logging.info("Get the file_in: %s" % self.file_in)

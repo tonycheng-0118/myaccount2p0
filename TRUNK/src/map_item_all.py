@@ -47,28 +47,28 @@ def gen_map_item_all():
     tony_func_proc_disp(msg=" Done gen invoice to .csv!")
 
     # 3
-    # file_in_path = "../dat/excel/*.xlsx" 
-    # file_in_all = glob.glob(file_in_path)
-    # for file_in in file_in_all:   
-    #     logging.info("Processing %s" % file_in) 
-    #     myexcel = map_item_excel()
-    #     myexcel.wb = load_workbook(file_in)
-    #     sheet_all = myexcel.wb.sheetnames
-    #     myexcel.wb.close()
+    file_in_path = "../dat/excel/*.xlsx" 
+    file_in_all = glob.glob(file_in_path)
+    for file_in in file_in_all:   
+        logging.info("Processing %s" % file_in) 
+        myexcel = map_item_excel()
+        myexcel.wb = load_workbook(file_in)
+        sheet_all = myexcel.wb.sheetnames
+        myexcel.wb.close()
         
-    #     for sheet in sheet_all:
-    #         myexcel = map_item_excel()
-    #         myexcel.wb = load_workbook(file_in)
-    #         myexcel.sh_active_name = sheet 
+        for sheet in sheet_all:
+            myexcel = map_item_excel()
+            myexcel.wb = load_workbook(file_in)
+            myexcel.sh_active_name = sheet 
             
-    #         chk_pattern = r'.*My_account_inc.xlsx'
-    #         myexcel.gen_rpt.chk_dayaccount_format_option  = []
-    #         if ( re.match(chk_pattern,file_in,0) ):
-    #             myexcel.gen_rpt.chk_dayaccount_format_option += ['IGNORE_CHK_INVALID_CONTENT']
+            chk_pattern = r'.*My_account_inc.xlsx'
+            myexcel.gen_rpt.chk_dayaccount_format_option  = []
+            if ( re.match(chk_pattern,file_in,0) ):
+                myexcel.gen_rpt.chk_dayaccount_format_option += ['IGNORE_CHK_INVALID_CONTENT']
         
-    #         myexcel.do_all_map(file_in=file_in,fileout_override=False)
-    #         myexcel.wb.close()
-    #         tony_func_proc_disp(msg=" Done gen myexcel:%s:%s to .csv!" % (file_in,sheet))
+            myexcel.do_all_map(file_in=file_in,fileout_override=False)
+            myexcel.wb.close()
+            tony_func_proc_disp(msg=" Done gen myexcel:%s:%s to .csv!" % (file_in,sheet))
     
     # 4
     tony_func_proc_disp(msg=" Start to gen manual to .csv!")
