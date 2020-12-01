@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../src"
+		},
+		{
+			"path": "../dat"
+		}
+	],
+	"settings": {
+		"vim.highlightedyank.enable": true,
+		"vim.highlightedyank.textColor": "#ffb400",
+		"vim.searchHighlightColor": "#ffb400",
+		"vim.searchHighlightTextColor": "#ffb4ff",
+		"vim.vimrc.enable": true,
+		"vim.useSystemClipboard": true
+	}
+}
