@@ -16,6 +16,7 @@
 		"vim.searchHighlightColor": "#ffb400",
 		"vim.searchHighlightTextColor": "#ffb4ff",
 		"vim.vimrc.enable": true,
-		"vim.useSystemClipboard": true
+		"vim.useSystemClipboard": true,
+		"python.pythonPath": "/home/tonychenglx/anaconda3/envs/env_myaccount2p0_v1.0/bin/python"
 	}
 }

@@ -410,7 +410,7 @@ class gen_rpt_xlsx:
         ofs_col = self.dayaccount_date_position.index(date)
         cell = sheet[self.dayaccount_date_start_position].offset(row=0,column=ofs_col)
         logging.debug (cell)
-        return ( cell.column if (ofs_only) else cell.coordinate )
+        return ( cell.column_letter if (ofs_only) else cell.coordinate )
     
     def locate_dayaccount_type(self,sheet,type,ofs_only=1):
         """
