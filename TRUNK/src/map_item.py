@@ -109,14 +109,14 @@ class map_item:
         expect item is list
         """
         access = 'w' if (create_file) else 'a'
-        with open(self.file_out, access, newline='') as csvfile:
+        with open(self.file_out, access, newline='', encoding='UTF-8-sig') as csvfile:
             writer = csv.writer(csvfile, delimiter=',')
             # writer.writerow(self.map_tab.item_struc_name)
             writer.writerow(item)
     
     def do_write_header(self,create_file):
         access = 'w' if (create_file) else 'a'
-        with open(self.file_out, access, newline='') as csvfile:
+        with open(self.file_out, access, newline='', encoding='UTF-8-sig') as csvfile:
             writer = csv.writer(csvfile, delimiter=',')
             writer.writerow([self.map_tab.map_tab_cmt_prefix+'='*20])
             writer.writerow([self.map_tab.map_tab_cmt_prefix+self.file_in])

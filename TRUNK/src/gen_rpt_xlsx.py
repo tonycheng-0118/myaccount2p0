@@ -649,7 +649,7 @@ class gen_rpt_xlsx:
         map_item = map_tab.gen_empty_item()
         is_classify = True
         df_column = []
-        with open(csv_in, mode='r', newline='') as csvfile:
+        with open(csv_in, mode='r', newline='', encoding='UTF-8-sig') as csvfile:
             reader = csv.reader(csvfile)
             row=0
             for line in reader:
