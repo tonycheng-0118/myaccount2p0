@@ -100,7 +100,7 @@ def gen_map_item_all():
 
 def gen_map_item_all_backup():
     cur_date = time.strftime("%Y_%m_%d", time.localtime())
-    src_file = "./all_out/mapped_item.all.csv"
+    src_file = TONY_ALLOUT_DIR+"mapped_item.all.csv"
     dst_file = "../dat/all_item_backup/mapped_item_" + cur_date + ".all.csv"
     shutil.copyfile(src=src_file, dst=dst_file)
     logging.info("backup file to %s" % dst_file)

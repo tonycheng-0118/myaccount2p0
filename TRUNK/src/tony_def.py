@@ -7,6 +7,8 @@ TONY_DEF_INFO  = "[INFO] "
 TONY_DEF_WARN  = "[WARN] "
 TONY_DEF_ERROR = "[ERROR] "
 
+TONY_ALLOUT_DIR = "./all_out/"
+
 TONY_LOG_LEVEL = logging.DEBUG # DEBUG, INFO, WARNING, ERROR, CRITICAL
 TONY_LOG_MSG_FORMAT = "[%(levelname)-5s]: %(message)-128s <%(asctime)s, %(filename)s, %(funcName)s, %(lineno)d, %(pathname)s>"
 TONY_LOG_DATE_FORMAT = '%Y%m%d%H%M%S'

@@ -20,10 +20,10 @@ class gen_rpt_xlsx:
     readable_item_id_start = 1000000000 # unique ID for each item, so far, no certain meaning for this number
     
     def __init__(self):
-        self.file_in  = "./all_out/mapped_item.all.csv"
+        self.file_in  = TONY_ALLOUT_DIR+"mapped_item.all.csv"
         self.file_4diff  = "../dat/all_item_backup/"
-        self.file_out = "./all_out/gen_rpt.xlsx"
-        self.csv_export = "./all_out/gen_rpt.db.csv"
+        self.file_out = TONY_ALLOUT_DIR+"gen_rpt.xlsx"
+        self.csv_export = TONY_ALLOUT_DIR+"gen_rpt.db.csv"
         self.template_in = "../src/my_account_template.xlsx"
         self.wb = None
         self.all_df = pd.DataFrame() # raw data from csv
@@ -50,7 +50,7 @@ class gen_rpt_xlsx:
         file_in_h.close()
 
         # if existed, parse to df 
-        self.all_df = self.csv2df(csv_in=self.file_in) 
+        self.all_df = self.csv2df(csv_in=self.file_in, is_export_db=True) 
     
     # def close_mapped_item_all_csv(self):
     #     self.file_in_h.close()
@@ -641,7 +641,7 @@ class gen_rpt_xlsx:
             total_expense_df.to_excel(writer, "total_expense")
 
     
-    def csv2df (self,csv_in):
+    def csv2df (self,csv_in, is_export_db=False):
         # parse csv to DataFrame
         tony_func_proc_disp(msg="Transfer csv to df!")
         df_out = pd.DataFrame() # raw data from csv
@@ -684,7 +684,11 @@ class gen_rpt_xlsx:
             logging.debug("===============================================")
 
         # export to csv
-        df_out.to_csv(self.csv_export)
+        if (is_export_db):
+            access = 'w' 
+            with open(self.csv_export, access, newline='', encoding='UTF-8-sig') as csvfile:
+                logging.debug ("touch the file only")
+            df_out.to_csv(self.csv_export)
 
         # try to import 
         # df_import = pd.read_csv(self.csv_export)

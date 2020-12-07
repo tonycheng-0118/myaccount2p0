@@ -412,23 +412,26 @@ d. To rename/delete the existed *.csv
         logging.debug ("button_clicked_gen_rpt")
         
         self.progressBar_genrpt.setValue(0)
-        
+
+        # 0 
+        self.progressBar_genrpt.setValue(10)
+
         # 1 gen .all.csv
         gen_map_item_all()
-        self.progressBar_genrpt.setValue(20)
+        self.progressBar_genrpt.setValue(30)
     
         # 2 backup the result
         gen_map_item_all_backup()
-        self.progressBar_genrpt.setValue(30)
+        self.progressBar_genrpt.setValue(40)
 
         # 3 gen rpt
         rpt = gen_rpt_xlsx()
         rpt.chk_input_csv()
         rpt.chk_gen_rpt_xlsx()
         rpt.gen_mapped_item_readable_xlsx()
-        self.progressBar_genrpt.setValue(60)
+        self.progressBar_genrpt.setValue(50)
         rpt.gen_mapped_item_diff_xlsx()
-        self.progressBar_genrpt.setValue(70)
+        self.progressBar_genrpt.setValue(60)
         rpt.gen_dayaccount_xlsx()
         self.progressBar_genrpt.setValue(90)
         rpt.gen_totalaccount_xlsx()

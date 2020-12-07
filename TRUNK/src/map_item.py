@@ -13,17 +13,20 @@ class map_item:
 
     def __init__(self):
         self.file_in  = None
-        self.file_out = "./all_out/mapped_item.all.csv" 
+        self.file_out = TONY_ALLOUT_DIR+"mapped_item.all.csv" 
         # the map item structure
         self.map_tab = map_item_struction()
         self.classify_ori    = [] 
         self.classify_mapped = [] # the content of mapped structure can be duplicated, and they will group together
     
     def chk_file(self,file_in):
+        if not os.path.exists(TONY_ALLOUT_DIR):
+            os.makedirs(TONY_ALLOUT_DIR)
         if not os.path.isfile(file_in):
             raise TypeError("No such file!!")
-        # if not os.path.isfile(self.file_out):
-            # raise TypeError("No such file!!")
+        if not os.path.isfile(self.file_out):
+            with open(self.file_out, 'w', newline='', encoding='UTF-8-sig') as csvfile:
+                logging.debug ("touch the file only")
         
         self.file_in = file_in 
         logging.info("Get the file_in: %s" % self.file_in)
