@@ -1,3 +1,5 @@
 TRUNK/src/__pycache__/*
 TRUNK/workdir/*
 TRUNK/dat/*
+TRUNK/distrubute/*
+!TRUNK/distrubute/readme
