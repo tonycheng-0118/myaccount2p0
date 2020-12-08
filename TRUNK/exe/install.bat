@@ -30,16 +30,16 @@ if %errorlevel% == 0 (
 
 :: to gen distrubute
 :gen_dist
-    D:
-    cd %GITHUB_PATH%myaccount2p0\TRUNK\release
+    cd %~d0
+    cd ..\release
     call pip install -r .\%RELEASE_VER%\requirements.txt
-    cd %GITHUB_PATH%myaccount2p0\TRUNK\distrubute
+    cd ..\distrubute
     attrib +R readme :: change file to read only
     rd /s /q build :: remove dir named build
     del /q * :: remove all file excep RO, /q is no confirm
     call pyinstaller -F -p ..\src\ --distpath . ..\src\%TOP_MODULE_NAME%.py
-    cd %GITHUB_PATH%myaccount2p0\TRUNK\exe
-    mklink "%TOP_MODULE_NAME%.exe" "%GITHUB_PATH%myaccount2p0\TRUNK\distrubute\%TOP_MODULE_NAME%.exe" :: create a lonk in ./exe
+    cd ..\exe
+    mklink "%TOP_MODULE_NAME%.exe" "..\distrubute\%TOP_MODULE_NAME%.exe"
     goto :exit
 
 :error
