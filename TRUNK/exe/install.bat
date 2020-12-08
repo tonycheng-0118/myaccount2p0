@@ -9,9 +9,9 @@ set "fullstamp=%YYYY%-%MM%-%DD%_%HH%-%Min%-%Sec%"
 
 :: custimized var
 set "ANACONDA_PATH=C:\Users\Acer\"
-set "GITHUB_PATH=D:\GitHub\"
 set "TOP_MODULE_NAME=myaccount"
 set "CONDA_ENV=env_myaccount2p0_v1.0"
+set "PYTHON_VER=3.6.9"
 set "RELEASE_VER=v1.0"
 
 :: welcome msg
@@ -44,6 +44,8 @@ if %errorlevel% == 0 (
 
 :error
     echo [ERROR] No %CONDA_ENV% in conda env!!
+    echo [INFO] To sinstall Anaconda, refer to https://medium.com/python4u/anaconda%E4%BB%8B%E7%B4%B9%E5%8F%8A%E5%AE%89%E8%A3%9D%E6%95%99%E5%AD%B8-f7dae6454ab6
+    echo [INFO] To create conda env, conda create -n %CONDA_ENV% python=%PYTHON_VER%
     call conda env list
     goto :exit
 
