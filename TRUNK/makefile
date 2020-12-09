@@ -29,6 +29,7 @@ SHELL=/bin/bash
 
 TOP_MODULE_NAME ?= myaccount
 CONDA_ENV ?= env_myaccount2p0_v1.0
+PYTHON_VER ?= 3.6.9
 RELEASE_VER ?= v1.0
 
 
