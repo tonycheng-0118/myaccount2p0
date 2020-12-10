@@ -4,6 +4,8 @@
 |作者|Tony Cheng|
 |---|---
 |日期|20201209|
+|---|---
+|GitHub|https://github.com/tonycheng-0118/myaccount2p0|
 
 ****
 # 1. Purpose:
@@ -42,8 +44,6 @@
 
 
 ****
-****
-****
 dat/
 ---
 ###
@@ -74,11 +74,12 @@ distrubute/
     * 不需要放入GitHub追蹤，因為可以透過script產生
 
 document/
+---
 ###
     * 置放一些開發文件
----
 
 exe/
+---
 ###
     * 置放給使用者安裝與啟動程式的地方
         - install.bat: 在Win10環境下，根據目前的./src版本產生對應的執行檔
