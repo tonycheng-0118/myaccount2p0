@@ -22,7 +22,7 @@ class gen_rpt_xlsx:
     def __init__(self):
         self.file_in  = TONY_ALLOUT_DIR+"mapped_item.all.csv"
         self.file_4diff  = "../dat/all_item_backup/"
-        self.file_out = TONY_ALLOUT_DIR+"gen_rpt.xlsx"
+        self.file_out = "../report/gen_rpt.xlsx"
         self.csv_export = TONY_ALLOUT_DIR+"gen_rpt.db.csv"
         self.template_in = "../src/my_account_template.xlsx"
         self.wb = None
