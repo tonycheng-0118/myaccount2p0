@@ -4,7 +4,7 @@
 |作者|Tony Cheng|
 |---|---
 |日期|20201209|
-|---|---
+|版本|v1.1|
 |GitHub|https://github.com/tonycheng-0118/myaccount2p0|
 
 ****
