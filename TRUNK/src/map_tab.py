@@ -4,6 +4,8 @@
 # expense is the amount of the NTD; income, borrow, and lend are reserved for future usage 
 from tony_def import *
 import re
+import os
+import csv
 
 class map_item_struction: 
     # initial global variable
@@ -28,6 +30,20 @@ class map_item_struction:
         self.map_dict["tag"]        = ["tag","標籤1","標籤2"]
         self.map_dict["note"]       = ["note"]
         self.chk_map_dict_uniq()
+
+        # for customized type feature  
+        self.type_file_in  = "../exe/customized_type.csv"
+        if not os.path.isfile(self.type_file_in):
+            with open(self.type_file_in, 'w', newline='', encoding='UTF-8-sig') as csvfile:
+                writer = csv.writer(csvfile, delimiter=',')
+                writer.writerow(self.item_type)
+                logging.debug ("create a default type_file")
+        else:
+            with open(self.type_file_in,mode='r',encoding='UTF-8-sig') as csvfile:
+                for line in csvfile:
+                    customized_type = line.split(",")
+                    self.item_type = [i.strip() for i in customized_type]
+                logging.debug ("update self.item_type")
 
     def gen_empty_item(self):
         empty_item = [i for i in range(0,len(self.item_struc_type))]

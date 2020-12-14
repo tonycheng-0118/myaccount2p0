@@ -171,7 +171,7 @@ d. To rename/delete the existed *.csv
         elif (action.text()=="Version"):
             logging.info ("Version")
 
-            version_text = "v1.0"
+            version_text = "v1.1"
             version_info = "INFO!"
 
             msg = QMessageBox()
@@ -436,6 +436,13 @@ d. To rename/delete the existed *.csv
         self.progressBar_genrpt.setValue(90)
         rpt.gen_totalaccount_xlsx()
         self.progressBar_genrpt.setValue(100)
+        
+        # Finish msg
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+        msg.setText("Gen_report Complete!!")
+        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        ret = msg.exec()
 
 
              

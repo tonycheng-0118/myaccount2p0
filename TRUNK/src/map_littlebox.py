@@ -94,6 +94,7 @@ if __name__ == "__main__":
     tony_func_proc_disp(msg=" Start to gen littlebox to .csv!")
     littlebox = map_item_littlebox()
     file_in_path = "../dat/littlebox/小票盒_201109.csv" 
+    # file_in_path = "../dat/littlebox/littlebox_example.csv" 
     littlebox.do_all_map(file_in=file_in_path,fileout_override=True)
 
     tony_func_proc_disp(msg=" Done gen littlebox to .csv!")

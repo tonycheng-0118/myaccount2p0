@@ -262,7 +262,7 @@ class gen_rpt_xlsx:
         self.close_gen_rpt_xslx()
     
     
-    def chk_dayaccount_format(self,sheet):
+    def chk_dayaccount_format(self,sheet,date_row='2'):
         """
         to extract the type position in the template sheet
         chk the extract type is as same as item_type
@@ -297,14 +297,14 @@ class gen_rpt_xlsx:
                         self.dayaccount_type_position.append(cell.value)
         
         # extract date position
-        sh_range = sheet['2'] # read the 2nd row
+        sh_range = sheet[date_row] # read the 2nd row
         is_1st_cell = False
         is_last_cell = False
         for cell in sh_range:
             # print (cell)
             # print (cell.value)
             # print (cell.coordinate)
-            if (cell.coordinate != 'A2'): # the 1st column cannot be date
+            if (cell.coordinate != ('A'+date_row)): # the 1st column cannot be date
                 if ((cell.value != None) and (self.dayaccount_date_start_position == None)):
                     is_1st_cell = True
                     self.dayaccount_date_start_position = cell.coordinate
@@ -318,7 +318,7 @@ class gen_rpt_xlsx:
                     if (cell.value == None):
                         self.dayaccount_date_position.append('None') # fill in reserved word
                     else:
-                        split_pattern = r'\W+'
+                        split_pattern = r'\W+|_'
                         tmp = re.split(split_pattern,str(cell.value))
                         # print (tmp)
                         date = tmp[0] + "_" + tmp[1] + "_" + tmp[2] 
@@ -335,16 +335,31 @@ class gen_rpt_xlsx:
         if (len(self.dayaccount_date_position) == 0):
             raise TypeError(" %s is not existed" % self.dayaccount_date_position)
 
-        # sync to map_tab 
+        # sync to map_tab, type in excel cannot exceed item_type 
         map_tab = map_item_struction()
-        if (set(self.dayaccount_type_position) != set(map_tab.item_type)):
-            A = set(self.dayaccount_type_position)
-            B = set(map_tab.item_type)
+        A = set(self.dayaccount_type_position)
+        B = set(map_tab.item_type)
+        A_diff_B = A.difference(B)
+        B_diff_A = B.difference(A)
+        if (len(A_diff_B)!=0):
             logging.error("A: %s" % A)
             logging.error("B: %s" % B)
             logging.error("A Diff B: %s" % A.difference(B))
             logging.error("B Diff A: %s" % B.difference(A))
             raise TypeError(" type content is not the same, please sync it!!")
+        if (len(B_diff_A)!=0):
+            logging.info("A: %s" % A)
+            logging.info("B: %s" % B)
+            logging.info("A Diff B: %s" % A.difference(B))
+            logging.info("B Diff A: %s" % B.difference(A))
+        # if (set(self.dayaccount_type_position) != set(map_tab.item_type)):
+        #     A = set(self.dayaccount_type_position)
+        #     B = set(map_tab.item_type)
+        #     logging.error("A: %s" % A)
+        #     logging.error("B: %s" % B)
+        #     logging.error("A Diff B: %s" % A.difference(B))
+        #     logging.error("B Diff A: %s" % B.difference(A))
+        #     raise TypeError(" type content is not the same, please sync it!!")
         
         # no duplicate
         duplicate = [item for item, count in collections.Counter(self.dayaccount_type_position).items() if count > 1]
@@ -361,20 +376,21 @@ class gen_rpt_xlsx:
             logging.info("IGNORE_CHK_INVALID_CONTENT")
             pass
         else:
-            pattern = re.compile(r'\d{4}')
-            tmp_list = map((lambda x: pattern.search(x,0)),self.dayaccount_date_position) # extract the year part
-            year_list = [i.group(0) for i in tmp_list if (i!=None)] # extract the year part
-            year_cnt = collections.Counter(year_list) # cal the days in each year
-            # print (year_cnt)
-            # print (year_cnt.keys())
-            # print (year_cnt.values())
-            for k,v in year_cnt.items(): # because there are no duplicated date, the total number of year is fixed
-                if ( (int(k)%4 == 0) and (v != 366) ):
-                    logging.error("for year: %s, the total days should be 366" % k)
-                    raise TypeError("Data error")
-                elif ( (int(k)%4 == 1) and (v != 365) ):
-                    logging.error("for year: %s, the total days should be 365" % k)
-                    raise TypeError("Data error")
+            # pattern = re.compile(r'\d{4}')
+            # tmp_list = map((lambda x: pattern.search(x,0)),self.dayaccount_date_position) # extract the year part
+            # year_list = [i.group(0) for i in tmp_list if (i!=None)] # extract the year part
+            # year_cnt = collections.Counter(year_list) # cal the days in each year
+            # # print (year_cnt)
+            # # print (year_cnt.keys())
+            # # print (year_cnt.values())
+            # for k,v in year_cnt.items(): # because there are no duplicated date, the total number of year is fixed
+            #     if ( (int(k)%4 == 0) and (v != 366) ):
+            #         logging.error("for year: %s, the total days should be 366" % k)
+            #         raise TypeError("Data error")
+            #     elif ( (int(k)%4 == 1) and (v != 365) ):
+            #         logging.error("for year: %s, the total days should be 365" % k)
+            #         raise TypeError("Data error")
+            pass # no need to check this 
         # for i in year_set:
         #     if ((int(i)%4 == 0) and (year_cnt.values() != 366)): # have ...._02_29
         #         year_cnt.values()
@@ -444,82 +460,110 @@ class gen_rpt_xlsx:
         # print (self.all_df.loc[self.all_df['date'] == '2020_07_05'])
         # pass
 
+    # def gen_dayaccount_xlsx(self):
+    #     tony_func_proc_disp(msg="Start to gen dayaccount sheet!")
+    #     # make sure the template is there 
+    #     self.wb = load_workbook(self.file_out)
+    #     sheet_name = "template"
+    #     if (sheet_name not in self.wb.sheetnames):
+    #         logging.error(" %s is not existed" % sheet_name)
+    #         raise TypeError(" %s is not existed" % sheet_name)
+    #     sh_template = self.wb[sheet_name]
+
+    #     # always clone from template to a new sheet in gen_rpt
+    #     sheet_name = "dayaccount"
+    #     if (sheet_name in self.wb.sheetnames):
+    #         sheet = self.wb[sheet_name]
+    #         self.wb.remove_sheet(sheet)
+    #         logging.info("Remove the %s and create a new one!" % sheet_name)
+    #     sh_dayaccount = self.wb.copy_worksheet(sh_template)
+    #     sh_dayaccount.title = sheet_name
+    #     self.chk_dayaccount_format(sh_dayaccount)
+        
+    #     logging.debug("sh_dayaccount.title %s" % sh_dayaccount.title)
+    #     logging.debug("sh_dayaccount.max_row %s" % sh_dayaccount.max_row)
+    #     logging.debug("sh_dayaccount.max_column %s" % sh_dayaccount.max_column)
+
+    #     # to merger the expense of the same date and type
+    #     df_column = ['date','type','expense']
+    #     cur_pair = ()
+    #     for i in range(self.all_df.shape[0]+1): # +1 so that the i can reach the end fo col
+    #         if (i==self.all_df.shape[0]):
+    #             sum_exp  = np.sum(df_merge.loc[:,['expense']])
+    #             df_tmp = pd.DataFrame([list(cur_pair)+[sum_exp[0]]],columns=df_column)
+    #             df = df.append(df_tmp)
+    #         else:
+    #             line = self.all_df.iloc[i,:]
+    #             df_nxt = pd.DataFrame([[line.date,line.type,line.expense]],columns=df_column)
+    #             nxt_pair = (line.date,line.type)
+    #             if (i==0):
+    #                 df = pd.DataFrame()
+    #                 df_merge = pd.DataFrame()
+    #                 df_merge = df_merge.append(df_nxt)
+    #                 cur_pair  = (line.date,line.type)
+    #             # elif (i==self.all_df.shape[0]-1):
+    #             #     df_merge = df_merge.append(df_nxt)
+    #             #     sum_exp  = np.sum(df_merge.loc[:,['expense']])
+    #             #     df_tmp = pd.DataFrame([list(cur_pair)+[sum_exp[0]]],columns=df_column)
+    #             #     df = df.append(df_tmp)
+    #             elif (nxt_pair != cur_pair):
+    #                 sum_exp  = np.sum(df_merge.loc[:,['expense']])
+    #                 df_tmp = pd.DataFrame([list(cur_pair)+[sum_exp[0]]],columns=df_column)
+    #                 df = df.append(df_tmp)
+    #                 df_merge = df_nxt
+    #                 cur_pair  = (line.date,line.type)
+    #             else:
+    #                 df_merge = df_merge.append(df_nxt)
+
+    #         logging.debug ("df_nxt %s" % df_nxt)
+    #         logging.debug ("df_merge %s" % df_merge)
+    #     self.merge_df = df
+    #     logging.debug ("df is %s" % df)
+
+    #     # tranlate from df to xsl
+
+    #     # write to dayaccount sheet
+    #     tony_func_proc_disp(msg="Write out to dayccount sheet!")
+    #     for i in range(self.merge_df.shape[0]):
+    #         line = self.merge_df.iloc[i,:]
+    #         logging.info ("Write out to dayaccount @ %s" % line['date'])
+    #         row = self.locate_dayaccount_date(sheet=sh_dayaccount,date=line['date']) # determine row
+    #         col = self.locate_dayaccount_type(sheet=sh_dayaccount,type=line['type']) # determine col
+    #         pos = row + str(col)
+    #         link = self.locate_dayaccount_link(sheet=sh_dayaccount,date=line['date'],type=line['type'])
+    #         sh_dayaccount[pos].value=line['expense']
+    #         sh_dayaccount[pos].hyperlink=link
+    #         sh_dayaccount[pos].font = Font(u='single', color=colors.BLUE)
+        
+    #     self.close_gen_rpt_xslx()
+    
     def gen_dayaccount_xlsx(self):
         tony_func_proc_disp(msg="Start to gen dayaccount sheet!")
-        # make sure the template is there 
-        self.wb = load_workbook(self.file_out)
-        sheet_name = "template"
-        if (sheet_name not in self.wb.sheetnames):
-            logging.error(" %s is not existed" % sheet_name)
-            raise TypeError(" %s is not existed" % sheet_name)
-        sh_template = self.wb[sheet_name]
 
-        # always clone from template to a new sheet in gen_rpt
-        sheet_name = "dayaccount"
-        if (sheet_name in self.wb.sheetnames):
-            sheet = self.wb[sheet_name]
-            self.wb.remove_sheet(sheet)
-            logging.info("Remove the %s and create a new one!" % sheet_name)
-        sh_dayaccount = self.wb.copy_worksheet(sh_template)
-        sh_dayaccount.title = sheet_name
-        self.chk_dayaccount_format(sh_dayaccount)
+        map_tab = map_item_struction()
         
-        logging.debug("sh_dayaccount.title %s" % sh_dayaccount.title)
-        logging.debug("sh_dayaccount.max_row %s" % sh_dayaccount.max_row)
-        logging.debug("sh_dayaccount.max_column %s" % sh_dayaccount.max_column)
+        # extract the yyyy_mm_dd
+        date_df = self.all_df.loc[:,'date'].copy()
+        # date_wi_dd = [ date_df[i][:-3] for i in range(len(date_df)) ] # how to manipulate each item in Series?? 
+        # date_wi_dd_df = pd.Series(date_wi_dd)
+        day_expense = pd.Series([ i*0  for i in range(0,len(map_tab.item_type))],index=map_tab.item_type)
+        day_expense_df = pd.DataFrame()
+        day_df = date_df.drop_duplicates(keep='first')
+        for i, item in zip (range(len(day_df)), day_df):
+            day_expense_df.insert(loc=i,column=item,value=day_expense,allow_duplicates=True)
 
-        # to merger the expense of the same date and type
-        df_column = ['date','type','expense']
-        cur_pair = ()
-        for i in range(self.all_df.shape[0]+1): # +1 so that the i can reach the end fo col
-            if (i==self.all_df.shape[0]):
-                sum_exp  = np.sum(df_merge.loc[:,['expense']])
-                df_tmp = pd.DataFrame([list(cur_pair)+[sum_exp[0]]],columns=df_column)
-                df = df.append(df_tmp)
-            else:
-                line = self.all_df.iloc[i,:]
-                df_nxt = pd.DataFrame([[line.date,line.type,line.expense]],columns=df_column)
-                nxt_pair = (line.date,line.type)
-                if (i==0):
-                    df = pd.DataFrame()
-                    df_merge = pd.DataFrame()
-                    df_merge = df_merge.append(df_nxt)
-                    cur_pair  = (line.date,line.type)
-                # elif (i==self.all_df.shape[0]-1):
-                #     df_merge = df_merge.append(df_nxt)
-                #     sum_exp  = np.sum(df_merge.loc[:,['expense']])
-                #     df_tmp = pd.DataFrame([list(cur_pair)+[sum_exp[0]]],columns=df_column)
-                #     df = df.append(df_tmp)
-                elif (nxt_pair != cur_pair):
-                    sum_exp  = np.sum(df_merge.loc[:,['expense']])
-                    df_tmp = pd.DataFrame([list(cur_pair)+[sum_exp[0]]],columns=df_column)
-                    df = df.append(df_tmp)
-                    df_merge = df_nxt
-                    cur_pair  = (line.date,line.type)
-                else:
-                    df_merge = df_merge.append(df_nxt)
-
-            logging.debug ("df_nxt %s" % df_nxt)
-            logging.debug ("df_merge %s" % df_merge)
-        self.merge_df = df
-        logging.debug ("df is %s" % df)
-
-        # tranlate from df to xsl
-
-        # write to dayaccount sheet
-        tony_func_proc_disp(msg="Write out to dayccount sheet!")
-        for i in range(self.merge_df.shape[0]):
-            line = self.merge_df.iloc[i,:]
-            logging.info ("Write out to dayaccount @ %s" % line['date'])
-            row = self.locate_dayaccount_date(sheet=sh_dayaccount,date=line['date']) # determine row
-            col = self.locate_dayaccount_type(sheet=sh_dayaccount,type=line['type']) # determine col
-            pos = row + str(col)
-            link = self.locate_dayaccount_link(sheet=sh_dayaccount,date=line['date'],type=line['type'])
-            sh_dayaccount[pos].value=line['expense']
-            sh_dayaccount[pos].hyperlink=link
-            sh_dayaccount[pos].font = Font(u='single', color=colors.BLUE)
+        # cal 
+        for i in range(len(self.all_df)):
+            logging.debug(i)
+            logging.debug(date_df[i])
+            day_expense_df.loc[self.all_df['type'][i],date_df[i]] += self.all_df['expense'][i]
+            logging.debug(day_expense_df.loc[self.all_df['type'][i],date_df[i]])
         
-        self.close_gen_rpt_xslx()
+        # write out 
+        with pd.ExcelWriter(self.file_out, engine='openpyxl') as writer: # the way not to overwrite the existed excel
+            writer.book = load_workbook(self.file_out)
+            day_expense_df.to_excel(writer, "day_expense")
+    
     
     def gen_monthaccount_xlsx(self):
         tony_func_proc_disp(msg="Start to gen monthaccount sheet!")

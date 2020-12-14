@@ -37,6 +37,7 @@
 
 # 5. Features:
 * [v1.0](#feature_v1p0)
+* [v1.1](#feature_v1p1)
 * [TODO](#feature_todo)
 
 # 6. Source codes structure:
@@ -113,12 +114,13 @@ ___
 initial_operation
 ---
 ###
-    1. Collect all the export data.csv from "發票存摺" and "小票盒" into ./data/invoice and ./dat/littlebox respectively.
-    2. If you have a type\date format like data，try to map those data to ./excel/*xlxs。Please copy the "My_account_example.xlsx" to "your_account_inc.xlsx", and start to enter the data. As the date can be be discontinuous ot empty，but type have to be completely unchagned。 
-    3. Double click myaccount.exe。
-    4. Click the help at menu bar and refer to steps.
-    5. Click the BIG BLUE button "Gen report"，and wait for the process bar to 100%。
-    6. in ./report/gen_report.xslx，you have all of the report。
+    1. After install the myaccount, please try run the myaccount.exe first and click the Gen_report for env test.
+    2. Collect all the export data.csv from "發票存摺" and "小票盒" into ./data/invoice and ./dat/littlebox respectively.
+    3. If you have a type\date format like data，try to map those data to ./excel/*xlxs。Please copy the "My_account_example.xlsx" to "your_account_inc.xlsx", and start to enter the data. As the date can be be discontinuous ot empty，but type have to be completely unchagned。 
+    4. Double click myaccount.exe。
+    5. Click the help at menu bar and refer to steps.
+    6. Click the BIG BLUE button "Gen report"，and wait for the process bar to 100%。
+    7. in ./report/gen_report.xslx，you have all of the report。
 
 followup_operation
 ---
@@ -168,6 +170,18 @@ feature_v1p0
 +  Add gui for item input manually
 +  Add session restore option, to save all_df and gen_rpt.xlsx for analysis only operation
 + Integrate all of action into gui
+```
+___
+feature_v1p1
+---
+```diff
++  gen_gpt don msg box.
++  custimized item_type.
++  modified daily report, only record the day with item.
+-  no link in daily report
+!  exe/instal.bat ANACONDA_PATH from user.config
+!  exe/instal.bat can auto pull GitHub
+!  Dynamic sizing GUI
 ```
 
 feature_todo
