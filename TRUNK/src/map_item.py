@@ -52,6 +52,7 @@ class map_item:
             self.do_item_map_preproc(item)
             item_mapped = self.map_tab.gen_item(self.classify_mapped,item)
             self.do_item_map_pstproc(item_mapped)
+            item_mapped[self.map_tab.item_struc_name.index("category")] = self.map_tab.item_type2category[item_mapped[self.map_tab.item_struc_name.index("type")]] 
             logging.debug(item_mapped)
             return item_mapped
         else:

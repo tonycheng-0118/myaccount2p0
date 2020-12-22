@@ -14,6 +14,7 @@ import numpy as np
 import collections
 import re
 import glob
+from map_item_export import *
 
 
 class gen_rpt_xlsx:
@@ -35,6 +36,7 @@ class gen_rpt_xlsx:
         self.dayaccount_type_position = []
         self.readable_tag_num = 1 # default cell number
         self.chk_dayaccount_format_option = [] # option to bypass certain chk
+        self.item_export = map_item_export() # export ot andromoney format
 
     def chk_input_csv(self):
 
@@ -683,6 +685,11 @@ class gen_rpt_xlsx:
             mon_expense_df.to_excel(writer, "mon_expense")
             year_expense_df.to_excel(writer, "year_expense")
             total_expense_df.to_excel(writer, "total_expense")
+    
+    def gen_item_export(self):
+        tony_func_proc_disp(msg=" Start to export to andromoney!")
+        self.item_export.do_item_export()
+        tony_func_proc_disp(msg=" Done export!")
 
     
     def csv2df (self,csv_in, is_export_db=False):
@@ -732,10 +739,10 @@ class gen_rpt_xlsx:
             access = 'w' 
             with open(self.csv_export, access, newline='', encoding='UTF-8-sig') as csvfile:
                 logging.debug ("touch the file only")
-            df_out.to_csv(self.csv_export)
+            df_out.to_csv(self.csv_export,index=0)
 
         # try to import 
-        # df_import = pd.read_csv(self.csv_export)
+        # df_import = pd.read_csv(self.csv_export,index_col=False)
 
         return df_out
 
@@ -773,6 +780,7 @@ if __name__ == "__main__":
     
     test = gen_rpt_xlsx()
     test.chk_input_csv()
+    test.gen_item_export()
     test.chk_gen_rpt_xlsx()
     test.gen_mapped_item_readable_xlsx()
     test.gen_mapped_item_diff_xlsx()

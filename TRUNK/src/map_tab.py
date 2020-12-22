@@ -12,7 +12,21 @@ class map_item_struction:
     map_dict = {}
     item_struc_name = ["name","date","category","type","expense","income","source","status","location","tag","note"]
     item_struc_type = [i for i in range(0,len(item_struc_name))]
-    item_type = ("Breakfast","Lunch","Dinner","Food_Material","Supplyment","Other_Food","Rental","Electicity","Motor_Fuel","Motor_Maintenance","Car_Fuel","Car_Maintenance","Transpotation","Parking","Easy_Card","Fitness_Fee","Sport_Equipment","Fitness_Supply","Daily_Needs","Enhancement","Book","Hair_Cut","Communication","Gift","Furniture","Medical","Cloth_Shoe","Red_Envelope","Entertainmant","Other","Salary","Bonus","Health_Examination","Reserved_Budget","Insurance","Marriage_Fund","House_Down_Payment","House_Installment","Car_Down_Payment","Car_Installment","Trave_Fund","Pension","Children_Fund","Dream_Fund","Tax","Investment","Lend","Borrow")
+    #item_category = ("Food","Rental","Transpotation","Sport","Enhancement","Entertainment","Other","Sporadic","Income","Transfer","Financial_Goal")
+    item_category = ("3C","Education","Enhancement","Entertainment","Fashion","Financial_Goal","Food","Home_Fee","Income",\
+                     "Medical","Motor","Other","Social","Sport","Transfer","Transportation","e-Invoice")
+    item_type = ("Breakfast","Lunch","Dinner","Food_Material","Supplyment","Other_Food","Rental","Electricity",\
+                 "Motor_Fuel","Motor_Maintenance","Car_Fuel","Car_Maintenance","Transportation","Parking",\
+                 "Easy_Card","Fitness_Fee","Sport_Equipment","Fitness_Supply","Daily_Needs","Enhancement","Book","Hair_Cut",\
+                 "Communication","Gift","Furniture","Medical","Cloth_Shoe","Red_Envelope","Entertainment",\
+                 "Other","Salary","Bonus","Health_Examination","Reserved_Budget","Insurance","Marriage_Fund","House_Down_Payment",\
+                 "House_Installment","Car_Down_Payment","Car_Installment","Trave_Fund","Pension","Children_Fund","Dream_Fund","Tax",\
+                 "Investment","Lend","Borrow","Refund",'Electricity_Bill', 'Bus', 'Part-Time', 'Transfer', 'Party', 'Backpack', 'Fruit', \
+                 'Plane', 'HSR', 'Stationery', 'Other_Income', 'Jeans', 'Exhibition', 'Hiking', 'Water_Fee', 'KTV', 'Accessories', \
+                 'Jacket', 'Bar_Code', 'Toy', 'Donation', 'Pet', 'ETC', 'Social_Fee', 'Gas_Fee', 'MRT', 'Cable-TV', 'Fine_Ticket', \
+                 'Taxi', 'Movie', 'T-shirt', 'Shoes', 'Computer_Misc', 'Education_misc', 'Shopping', 'Trip', 'House_Admin_Fee', \
+                 'Allowance', 'Appliance', 'Snack', 'Computer_Device', 'Mackup', 'Internet_Fee', 'Tuition')
+    item_type2category = {}
     map_tab_cmt_prefix = '//##'
         
     def __init__(self):
@@ -31,19 +45,170 @@ class map_item_struction:
         self.map_dict["note"]       = ["note"]
         self.chk_map_dict_uniq()
 
+        # for type2category
+
+        self.item_type2category["Communication"]                =    "3C"                                                
+        self.item_type2category["Computer_Device"]              =    "3C"                                                
+        self.item_type2category["Computer_Misc"]                =    "3C"                                                
+        self.item_type2category["Stationery"]                   =    "Education"
+        self.item_type2category["Tuition"]                      =    "Education"
+        self.item_type2category["Book"]                         =    "Enhancement"
+        self.item_type2category["Enhancement"]                  =    "Enhancement"
+        self.item_type2category["Entertainment"]                =    "Entertainment"
+        self.item_type2category["Exhibition"]                   =    "Entertainment"
+        self.item_type2category["Hiking"]                       =    "Entertainment"
+        self.item_type2category["Education_misc"]               =    "Education"
+        self.item_type2category["KTV"]                          =    "Entertainment"
+        self.item_type2category["Movie"]                        =    "Entertainment"
+        self.item_type2category["Party"]                        =    "Entertainment"
+        self.item_type2category["Shopping"]                     =    "Entertainment"
+        self.item_type2category["Toy"]                          =    "Entertainment"
+        self.item_type2category["Trip"]                         =    "Entertainment"
+        self.item_type2category["Accessories"]                  =    "Fashion"
+        self.item_type2category["Backpack"]                     =    "Fashion"
+        self.item_type2category["Hair_Cut"]                     =    "Fashion"
+        self.item_type2category["Jacket"]                       =    "Fashion"
+        self.item_type2category["Jeans"]                        =    "Fashion"
+        self.item_type2category["Mackup"]                       =    "Fashion"
+        self.item_type2category["Shoes"]                        =    "Fashion"
+        self.item_type2category["T-shirt"]                      =    "Fashion"
+        self.item_type2category["Cloth_Shoe"]                   =    "Fashion"
+        self.item_type2category["Breakfast"]                    =    "Food"
+        self.item_type2category["Dinner"]                       =    "Food"
+        self.item_type2category["Food_Material"]                =    "Food"
+        self.item_type2category["Fruit"]                        =    "Food"
+        self.item_type2category["Lunch"]                        =    "Food"
+        self.item_type2category["Other_Food"]                   =    "Food"
+        self.item_type2category["Snack"]                        =    "Food"
+        self.item_type2category["Supplyment"]                   =    "Food"
+        self.item_type2category["Appliance"]                    =    "Home_Fee"
+        self.item_type2category["Cable-TV"]                     =    "Home_Fee"
+        self.item_type2category["Electricity"]                  =    "Home_Fee"
+        self.item_type2category["Electricity_Bill"]             =    "Home_Fee"
+        self.item_type2category["Furniture"]                    =    "Home_Fee"
+        self.item_type2category["Gas_Fee"]                      =    "Home_Fee"
+        self.item_type2category["House_Admin_Fee"]              =    "Home_Fee"
+        self.item_type2category["Internet_Fee"]                 =    "Home_Fee"
+        self.item_type2category["Rental"]                       =    "Home_Fee"
+        self.item_type2category["Water_Fee"]                    =    "Home_Fee"
+        self.item_type2category["Medical"]                      =    "Medical"
+        self.item_type2category["Car_Fuel"]                     =    "Motor"
+        self.item_type2category["Car_Maintenance"]              =    "Motor"
+        self.item_type2category["ETC"]                          =    "Motor"
+        self.item_type2category["Fine_Ticket"]                  =    "Motor"
+        self.item_type2category["Motor_Maintenance"]            =    "Motor"
+        self.item_type2category["Motor_Fuel"]                   =    "Motor"
+        self.item_type2category["Parking"]                      =    "Motor"
+        self.item_type2category["Donation"]                     =    "Other"
+        self.item_type2category["Other"]                        =    "Other"
+        self.item_type2category["Pet"]                          =    "Other"
+        self.item_type2category["Gift"]                         =    "Social"
+        self.item_type2category["Red_Envelope"]                 =    "Social"
+        self.item_type2category["Social_Fee"]                   =    "Social"
+        self.item_type2category["Fitness_Fee"]                  =    "Sport"
+        self.item_type2category["Fitness_Supply"]               =    "Sport"
+        self.item_type2category["Sport_Equipment"]              =    "Sport"
+        self.item_type2category["Bus"]                          =    "Transportation"
+        self.item_type2category["Easy_Card"]                    =    "Transportation"
+        self.item_type2category["HSR"]                          =    "Transportation"
+        self.item_type2category["MRT"]                          =    "Transportation"
+        self.item_type2category["Plane"]                        =    "Transportation"
+        self.item_type2category["Taxi"]                         =    "Transportation"
+        self.item_type2category["Transportation"]               =    "Transportation"
+        self.item_type2category["Bar_Code"]                     =    "e-Invoice"
+        self.item_type2category["Daily_Needs"]                  =    "Home_Fee"
+        self.item_type2category["Salary"]                       =    "Income"
+        self.item_type2category["Part-Time"]                    =    "Income"
+        self.item_type2category["Allowance"]                    =    "Income"
+        self.item_type2category["Other_Income"]                 =    "Income"
+        self.item_type2category["Bonus"]                        =    "Income"
+        self.item_type2category["Car_Down_Payment"]             =    "Financial_Goal"
+        self.item_type2category["Insurance"]                    =    "Financial_Goal"
+        self.item_type2category["Investment"]                   =    "Financial_Goal"
+        self.item_type2category["Lend"]                         =    "Financial_Goal"
+        self.item_type2category["Marriage_Fund"]                =    "Financial_Goal"
+        self.item_type2category["Tax"]                          =    "Financial_Goal"
+        self.item_type2category["Trave_Fund"]                   =    "Financial_Goal"
+        self.item_type2category["Transfer"]                     =    "Transfer"
+        self.item_type2category["Refund"]                       =    "Transfer"
+        self.item_type2category["Health_Examination"]           =    "Financial_Goal"
+        self.item_type2category["Borrow"]                       =    "Financial_Goal"
+        self.item_type2category["Dream_Fund"]                   =    "Financial_Goal"
+        self.item_type2category["House_Down_Payment"]           =    "Financial_Goal"
+        self.item_type2category["Reserved_Budget"]              =    "Financial_Goal"
+        self.item_type2category["Children_Fund"]                =    "Financial_Goal"
+        self.item_type2category["House_Installment"]            =    "Financial_Goal"
+        self.item_type2category["Car_Installment"]              =    "Financial_Goal"
+        self.item_type2category["Pension"]                      =    "Financial_Goal"
+
         # for customized type feature  
-        self.type_file_in  = "../exe/customized_type.csv"
-        if not os.path.isfile(self.type_file_in):
-            with open(self.type_file_in, 'w', newline='', encoding='UTF-8-sig') as csvfile:
+        type_file_in  = "../exe/customized_type.csv"
+        if not os.path.isfile(type_file_in):
+            with open(type_file_in, 'w', newline='', encoding='UTF-8-sig') as csvfile:
                 writer = csv.writer(csvfile, delimiter=',')
                 writer.writerow(self.item_type)
                 logging.debug ("create a default type_file")
         else:
-            with open(self.type_file_in,mode='r',encoding='UTF-8-sig') as csvfile:
+            with open(type_file_in,mode='r',encoding='UTF-8-sig') as csvfile:
                 for line in csvfile:
                     customized_type = line.split(",")
                     self.item_type = [i.strip() for i in customized_type]
                 logging.debug ("update self.item_type")
+        
+        # for customized category feature  
+        category_file_in  = "../exe/customized_category.csv"
+        if not os.path.isfile(category_file_in):
+            with open(category_file_in, 'w', newline='', encoding='UTF-8-sig') as csvfile:
+                writer = csv.writer(csvfile, delimiter=',')
+                writer.writerow(self.item_category)
+                logging.debug ("create a default category_file")
+        else:
+            with open(category_file_in,mode='r',encoding='UTF-8-sig') as csvfile:
+                for line in csvfile:
+                    customized_category = line.split(",")
+                    self.item_category = [i.strip() for i in customized_category]
+                logging.debug ("update self.item_category")
+
+        # for type2category 
+        type2category_file_in  = "../exe/customized_type2type2category.csv"
+        str_tmp = []
+        for k,v in self.item_type2category.items():
+            str_tmp += ['{key}:{value}'.format(key=k,value=v)]
+        if not os.path.isfile(type2category_file_in):
+            with open(type2category_file_in, 'w', newline='', encoding='UTF-8-sig') as csvfile:
+                writer = csv.writer(csvfile, delimiter=',')
+                writer.writerow(str_tmp)
+                logging.debug ("create a default type2category_file")
+        else:
+            with open(type2category_file_in,mode='r',encoding='UTF-8-sig') as csvfile:
+                self.item_type2category = {} 
+                for line in csvfile:
+                    tmp = line.split(",")
+                    customized_type2category = [i.strip() for i in tmp]
+                    for i in customized_type2category:
+                        j = i.split(":")
+                        self.item_type2category.update({j[0]:j[1]})
+                logging.debug ("update self.item_type2category")
+        if (set(self.item_type2category.keys()) != set(self.item_type)): # all type have to map to a existed category
+            A = set(self.item_type2category.keys())
+            B = set(self.item_type)
+            logging.error("Not all item_type is assigned to category!")
+            logging.error("type2category - item_type: %s" % A.difference(B))
+            logging.error("item_type - type2category: %s" % B.difference(A))
+            raise TypeError("Error, please check log!")
+        if (set(self.item_type2category.values()) != set(self.item_category)):
+            A = set(self.item_type2category.values())
+            B = set(self.item_category)
+            logging.info("Not all item_category is assigned to category!")
+            logging.info("type2category - item_type: %s" % A.difference(B))
+            logging.info("item_type - type2category: %s" % B.difference(A))
+        for k,v in self.item_type2category.items(): # to chk the exist of type and category pair
+            if ( (k in self.item_type) and (v in self.item_category) ):
+                pass
+            else:
+                logging.error("customized_type: %s and customized_category: %s is not available" % (k,v))
+                raise TypeError("Error, please check log!")
+        pass
 
     def gen_empty_item(self):
         empty_item = [i for i in range(0,len(self.item_struc_type))]
