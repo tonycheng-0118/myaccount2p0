@@ -427,6 +427,7 @@ d. To rename/delete the existed *.csv
         # 3 gen rpt
         rpt = gen_rpt_xlsx()
         rpt.chk_input_csv()
+        rpt.gen_item_export()
         rpt.chk_gen_rpt_xlsx()
         rpt.gen_mapped_item_readable_xlsx()
         self.progressBar_genrpt.setValue(50)
