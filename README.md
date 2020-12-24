@@ -181,11 +181,11 @@ feature_v1p1
 + custimized item_type2category.
 + modified daily report, only record the day with item.
 - no link in daily report
-! exe/instal.bat ANACONDA_PATH from user.config
-! exe/instal.bat can auto pull GitHub
++ exe/instal.bat ANACONDA_PATH from user config
++ exe/instal.bat can auto pull GitHub
 ! Dynamic sizing GUI
 + dat/all_item_export for andromoney export format 
-! dat/andromoney for andromoney import, will be extract the diff first 
++ dat/andromoney for andromoney import, will be extract the diff first 
 + fix typo type: Electicity, Transpotation, Entertainmant,  
 ```
 

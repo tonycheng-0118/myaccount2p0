@@ -18,7 +18,50 @@ set "RELEASE_VER=v1.0"
 echo Welcome to install myaccount2p0!!
 echo Today is "%fullstamp%"
 
-:: activate anaconda3
+:: 
+set /p IS_DEL_CUSTOMIZED_FILE=Do you want to delete the customized_*.csv (YES/NO):
+echo %IS_DEL_CUSTOMIZED_FILE%
+if %IS_DEL_CUSTOMIZED_FILE% == YES (
+    echo "Del the customized_*.csv"
+    del customized_*.csv
+) else (
+    echo "Keep the customized_*.csv"
+)
+
+
+:: del the auto gen file 
+echo "Del the auto gen file!"
+del myaccount.exe
+
+
+:: chk git version
+echo "Try to update the latest version!!"
+call git pull
+if %errorlevel% == 0 (
+    echo "Pull the latest version!!"
+) else (
+    echo "Unable to pull, please check the following item!"
+    echo "Check whethere the internet connectivity"
+    echo "Install GitHub Desktop in https://desktop.github.com/"
+    echo "Check the Path for GitHubDesk/bin"
+    goto :error
+)
+
+
+:: chk activate anaconda3 path
+if exist %ANACONDA_PATH%anaconda3\Scripts\activate.bat (
+    echo "activate.bat path is existed!"
+) else if exist anaconda_path.txt (
+    set /p ANACONDA_PATH=<anaconda_path.txt
+    echo using %ANACONDA_PATH% for anaconda path!!
+) else (
+    echo "activate.bat path is NOT existed! Please edit anaconda_path.txt and run install.bat again!"
+    echo "Please refer to following path!" 
+    where activate.bat
+    echo %ANACONDA_PATH%>anaconda_path.txt
+    goto :error
+)
+
 call %ANACONDA_PATH%anaconda3\Scripts\activate.bat
 call conda activate %CONDA_ENV%
 
@@ -27,6 +70,7 @@ if %errorlevel% == 0 (
 ) else (
     goto :error
 )
+
 
 :: to gen distrubute
 :gen_dist
