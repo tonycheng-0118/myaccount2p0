@@ -10,6 +10,12 @@ class map_item_invoice(map_item):
 
     def __init__(self):
         super().__init__()
+        self.map_tab.add_map_src(dst="name",src="消費品項")
+        self.map_tab.add_map_src(dst="date",src="消費日期")
+        self.map_tab.add_map_src(dst="expense",src="小計")
+        self.map_tab.add_map_src(dst="location",src="店家名稱")
+        self.map_tab.add_map_src(dst="note",src="單價")
+        self.map_tab.add_map_src(dst="note",src="個數")
 
     def do_item_map_gatekeeper(self,item):
         """
@@ -86,10 +92,8 @@ if __name__ == "__main__":
     #     print ("item: %s, type: %s" % (item,type))
     tony_func_proc_disp(msg=" Start to gen invoice to .csv!")
     invoice = map_item_invoice()
-    invoice.map_tab.add_map_src(dst="note",src="單價")
-    invoice.map_tab.add_map_src(dst="note",src="個數")
-    invoice.map_tab.add_map_src(dst="location",src="店家名稱")
-    file_in_path = "../dat/invoice/invoice_detail_export_10908.csv"
+
+    file_in_path = "../dat/invoice/invoice_detail_export_example.csv"
     invoice.do_all_map(file_in=file_in_path,fileout_override=True)
     # for year in range(108,110,1):
     #     for month in range(1,13,1):

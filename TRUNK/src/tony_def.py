@@ -24,3 +24,10 @@ def tony_func_proc_disp(msg):
     module_name = sys._getframe(1).f_globals['__name__']  # Obtain calling frame
     function_name = sys._getframe(1).f_code.co_name
     print (TONY_DEF_INFO + "%-64s <%s, %s>" % (msg,module_name,function_name))
+
+# other def
+# for myaccount2p0
+ANDROMONEY_RSV_CATEGORY = "SYSTEM"
+ANDROMONEY_VALID_KEYWD = "Valid_AndroMoney"
+ANDROMONEY_EXPORT_COMMA_REPLACE = '@@'
+

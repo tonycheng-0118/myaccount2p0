@@ -7,6 +7,7 @@ from map_littlebox import *
 from map_invoice import *
 from map_excel import *
 from map_manual import *
+from map_andromoney import *
 import re
 import glob
 import shutil
@@ -36,9 +37,7 @@ def gen_map_item_all():
     # 2
     tony_func_proc_disp(msg=" Start to gen invoice to .csv!")
     invoice = map_item_invoice()
-    invoice.map_tab.add_map_src(dst="note",src="單價")
-    invoice.map_tab.add_map_src(dst="note",src="個數")
-    invoice.map_tab.add_map_src(dst="location",src="店家名稱")
+
     file_in_path = "../dat/invoice/*.csv" 
     file_in_all = glob.glob(file_in_path)
     for file_in in file_in_all:   
@@ -78,7 +77,17 @@ def gen_map_item_all():
     for file_in in file_in_all:   
         logging.info("Processing %s" % file_in) 
         manual.do_all_map(file_in=file_in,fileout_override=False)
-    tony_func_proc_disp(msg=" Done gen invoice to .csv!")
+    tony_func_proc_disp(msg=" Done gen manual to .csv!")
+    
+    # 5
+    tony_func_proc_disp(msg=" Start to gen andromoney to .csv!")
+    andromoney = map_item_andromoney()
+    file_in_path = "../dat/andromoney/*.csv" 
+    file_in_all = glob.glob(file_in_path)
+    for file_in in file_in_all:   
+        logging.info("Processing %s" % file_in) 
+        andromoney.do_all_map(file_in=file_in,fileout_override=False)
+    tony_func_proc_disp(msg=" Done gen andromoney to .csv!")
 
     
     #### for year in range(2014,2021,1): 

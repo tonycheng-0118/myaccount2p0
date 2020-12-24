@@ -10,6 +10,14 @@ class map_item_littlebox(map_item):
 
     def __init__(self):
         super().__init__()
+        self.map_tab.add_map_src(dst="name",src="註記")
+        self.map_tab.add_map_src(dst="date",src="日期")
+        self.map_tab.add_map_src(dst="type",src="分類")
+        self.map_tab.add_map_src(dst="expense",src="支出")
+        self.map_tab.add_map_src(dst="income",src="收入")
+        self.map_tab.add_map_src(dst="location",src="定位")
+        self.map_tab.add_map_src(dst="tag",src="標籤1")
+        self.map_tab.add_map_src(dst="tag",src="標籤2")
 
     def do_item_map_gatekeeper(self,item):
         """

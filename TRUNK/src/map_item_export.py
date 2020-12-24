@@ -4,18 +4,17 @@
 
 from tony_def import *
 from map_item import *
+from map_andromoney import *
 import pandas as pd
 from shutil import copyfile
 import re
 
 class map_item_export():
 
-    EXPORT_COMMA_REPLACE = '@@'
-
     def __init__(self):
         self.file_in  = TONY_ALLOUT_DIR+"gen_rpt.db.csv"
-        self.file_ref = "../dat/all_item_export/andromoney/"+"AndroMoney_example" 
-        self.file_out = "../dat/all_item_export/andromoney/"+"AndroMoney.csv" 
+        self.file_ref = "../dat/all_item_export/andromoney/"+"AndroMoney_example.csv" 
+        self.file_out = "../dat/all_item_export/andromoney/"+"AndroMoney_export.csv" 
         self.classify_export = []
         self.df_db = None
     
@@ -35,8 +34,9 @@ class map_item_export():
                 # print (line)
                 if (i==1):
                     tmp = line.split(",")
-                    tmp = [i.strip() for i in tmp]
-                    self.classify_export = [i[1:-1] for i in tmp] # rid of dummy ""
+                    self.classify_export = [i.strip() for i in tmp]
+                    # tmp = [i.strip() for i in tmp]
+                    # self.classify_export = [i[1:-1] for i in tmp] # rid of dummy ""
                 i += 1
             # print (self.classify_export)
 
@@ -48,6 +48,7 @@ class map_item_export():
         for i in range(self.df_db.shape[0]):
             df_item = map_item()
             item = [i for i in range(0,len(self.classify_export))]
+
             item[self.classify_export.index('Id')]          = self.df_db.index.values[i] 
             item[self.classify_export.index('幣別')]        = "TWD" 
             item[self.classify_export.index('金額')]        = self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("expense")] 
@@ -66,25 +67,24 @@ class map_item_export():
                 item[self.classify_export.index('付款(轉出)')]  = "現金"
                 item[self.classify_export.index('收款(轉入)')]  = ""
             # for note
-            # tmp_note0 = {'name':      self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("name")] , \
-            #             'source':    self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("source")] , \
-            #             'status':    self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("status")] , \
-            #             'tag'   :    self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("tag")] , \
-            #             'note':      self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("note")]}
             tmp_note0 = {}
             for j in df_item.map_tab.item_struc_name:
                 tmp_note0.update({j:self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]})
             tmp_note1 = str(tmp_note0) # can be recover by eval()
-            tmp_note2 = re.sub(',',self.EXPORT_COMMA_REPLACE,tmp_note1)
+            tmp_note2 = re.sub(',',ANDROMONEY_EXPORT_COMMA_REPLACE,tmp_note1)
             item[self.classify_export.index('備註')]        = tmp_note2 # for andromoney reverse to myaccount usage
             item[self.classify_export.index('Periodic')]    = ""
-            # for tag
-            # tmp_tag = eval(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("tag")])
-            # first_tag = tmp_tag[0] if (len(tmp_tag)) else ""
             item[self.classify_export.index('專案')]        = "" # for differenciation from myaccount and andromoney
             item[self.classify_export.index('商家(公司)')]  = "" # self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("location")]
             item[self.classify_export.index('uid')]         = "" 
             item[self.classify_export.index('時間')]        = TONY_CURRENT_TIME 
+              
+            if (self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("status")] == ANDROMONEY_VALID_KEYWD):
+                note = eval(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("note")])
+                col2note = ["幣別","付款(轉出)","收款(轉入)","備註","Periodic","專案","商家(公司)","uid","時間"]
+                for i in col2note:
+                    item[self.classify_export.index(i)] = note[i]    
+            
             self.do_item_writeout(item)
         
     def do_item_writeout(self,item,create_file=False):

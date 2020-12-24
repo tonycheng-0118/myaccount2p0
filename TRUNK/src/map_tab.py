@@ -9,7 +9,6 @@ import csv
 
 class map_item_struction: 
     # initial global variable
-    map_dict = {}
     item_struc_name = ["name","date","category","type","expense","income","source","status","location","tag","note"]
     item_struc_type = [i for i in range(0,len(item_struc_name))]
     #item_category = ("Food","Rental","Transpotation","Sport","Enhancement","Entertainment","Other","Sporadic","Income","Transfer","Financial_Goal")
@@ -32,16 +31,17 @@ class map_item_struction:
     def __init__(self):
         # initialize mapping pair
         self.classify_map_order = []
-        self.map_dict["name"]       = ["name","消費品項","註記"]
-        self.map_dict["date"]       = ["date","消費日期","日期"]
+        self.map_dict = {}
+        self.map_dict["name"]       = ["name"]
+        self.map_dict["date"]       = ["date"]
         self.map_dict["category"]   = ["category"]
-        self.map_dict["type"]       = ["type","分類"]
-        self.map_dict["expense"]    = ["expense","小計","支出"]
-        self.map_dict["income"]     = ["income","收入"]
+        self.map_dict["type"]       = ["type"]
+        self.map_dict["expense"]    = ["expense"]
+        self.map_dict["income"]     = ["income"]
         self.map_dict["source"]     = ["source"]
         self.map_dict["status"]     = ["status"]
-        self.map_dict["location"]   = ["location","定位"]
-        self.map_dict["tag"]        = ["tag","標籤1","標籤2"]
+        self.map_dict["location"]   = ["location"]
+        self.map_dict["tag"]        = ["tag"]
         self.map_dict["note"]       = ["note"]
         self.chk_map_dict_uniq()
 
@@ -259,6 +259,9 @@ class map_item_struction:
             # print("DDDD",value)
             if (i == "note"):
                 # print ("in note")
+                # print (value[classify_copy.index(i)])
+                # print (type(value[classify_copy.index(i)]))
+                # print (self.item_struc_name.index(i))
                 item[self.item_struc_name.index(i)].update(value[classify_copy.index(i)])
                 # print (item[self.item_struc_name.index(i)])
                 # print (value[classify.index(i)])

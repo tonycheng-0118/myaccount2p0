@@ -59,6 +59,14 @@ class map_item:
             logging.info("This item is invalid: %s" % item)
             return None
     
+    def do_item_map_preparse(self,file_in,file_out):
+        """
+        a call back to for all pre paraing before do_item_map_gatekeeper 
+        return: file 
+        purpose: 1. to normalize the /r case 
+        """
+        pass
+    
     def do_item_map_gatekeeper(self,item):
         """
         a call back to for all pre processing before do_item_map_preproc
@@ -81,11 +89,21 @@ class map_item:
         """
         pass
 
-    def do_all_map(self,file_in,fileout_override=False):
+    def do_all_map(self,file_in,fileout_override=False,preparse=False):
         tony_func_proc_disp(msg=" Start to map csv!")
         self.chk_file(file_in)
         self.do_write_header(create_file=fileout_override)
-        with open(self.file_in,mode='r',encoding='UTF-8-sig') as fp:
+
+        # for source file_in pre_parse
+        if (preparse):
+            file_proc = TONY_ALLOUT_DIR+"map_item_preparse.csv" 
+            with open(file_proc, 'w', newline='', encoding='UTF-8-sig') as csvfile:
+                logging.debug ("Create a new prepasre.csv")
+            self.do_item_map_preparse(file_in=file_in,file_out=file_proc)
+        else:
+            file_proc = file_in
+
+        with open(file_proc,mode='r',encoding='UTF-8-sig') as fp:
             is_classify=True
             is_1st_item=True 
             for line in fp:

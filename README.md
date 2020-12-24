@@ -50,6 +50,11 @@ dat/
 ###
     * 用來存放使用者的記帳source file
         all_item_backup/
+            andromoney/
+                - 自動產生文件
+                - 可以當作AndroMoney import的文件
+                - 內容已排除../../andromoney/*.csv內非原生andromoney的部分 
+        all_item_backup/
             - 自動產生文件
             - 以當下使用日期為單位，把全部parsing過的檔案用.csv的方式備份起來。
             - 在gen_rpt中的mapped_item_diff會使用到。
@@ -66,6 +71,9 @@ dat/
         manual/
             - 使用者輸入
             - 使用此GUI輸出的.csv
+        andromoney/
+            - 使用者輸入
+            - 使用手機APP"AndroMoney"匯出的.csv
     * 不需要放入GitHub追蹤，因為屬於使用者個人資料 
 
 distrubute/
@@ -115,21 +123,23 @@ initial_operation
 ---
 ###
     1. After install the myaccount, please try run the myaccount.exe first and click the Gen_report for env test.
-    2. Collect all the export data.csv from "發票存摺" and "小票盒" into ./data/invoice and ./dat/littlebox respectively.
+    2. Collect all the export data.csv from "發票存摺", "小票盒", and "AndroMoney" into ./data/invoice, ./dat/littlebox, ./dat/andromoney/ respectively.
     3. If you have a type\date format like data，try to map those data to ./excel/*xlxs。Please copy the "My_account_example.xlsx" to "your_account_inc.xlsx", and start to enter the data. As the date can be be discontinuous ot empty，but type have to be completely unchagned。 
     4. Double click myaccount.exe。
     5. Click the help at menu bar and refer to steps.
     6. Click the BIG BLUE button "Gen report"，and wait for the process bar to 100%。
     7. in ./report/gen_report.xslx，you have all of the report。
+    8. 把./dat/all_item_export/andromoney/AndroMoney_export.csv匯入AndroMoney的原生csv，並在完成後再匯入手機。
 
 followup_operation
 ---
 ###
     1. Assume you have done the initial operation and successfully generate the report。
-    2. Put the latest data.csv from "發票存摺" and "小票盒" into ./data/invoice and ./dat/littlebox respectively.
+    2. Put the latest data.csv from "發票存摺", "小票盒", and "AndroMoney" into ./data/invoice, ./dat/littlebox, ./dat/andromoney/ respectively.
     3. Or enter it manually through ./excel/***_inc.xlsx。 
     4. Or enter it manually after activating GUI。
     5. Double click myaccount.exe and start to "Gen report"。
+    6. 把./dat/all_item_export/andromoney/AndroMoney_export.csv匯入AndroMoney的原生csv，並在完成後再匯入手機。
 
 ___
 mapped_item_readable
@@ -183,10 +193,13 @@ feature_v1p1
 - no link in daily report
 ! exe/instal.bat ANACONDA_PATH from user.config
 ! exe/instal.bat can auto pull GitHub
+! exe/*.exe link have to del before install if existed 
 ! Dynamic sizing GUI
 + dat/all_item_export for andromoney export format 
-! dat/andromoney for andromoney import, will be extract the diff first 
++ dat/andromoney for andromoney import, will be extract the diff first 
++ dat/andromoney SYSTEM,INIT_AMOUNT case should be ignore in gen_rpt
 + fix typo type: Electicity, Transpotation, Entertainmant,  
++ rewrite csv import part by using pd.read_csv 
 ```
 
 feature_todo
