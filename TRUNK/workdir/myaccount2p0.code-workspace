@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../dat"
+		},
+		{
+			"path": "../exe"
 		}
 	],
 	"settings": {
