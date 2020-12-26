@@ -46,19 +46,26 @@ class map_item_andromoney(map_item):
         return: item_valid=True/False,
         purpose: 1. to filter out the invalid item in raw data
         """
-        # chk the date format
+        # to differentiate andromoney and other
         chk_pattern = r'{pattern}'.format(pattern = ANDROMONEY_EXPORT_COMMA_REPLACE)
         chk_src = str(item[self.classify_ori.index('備註')])
         logging.info (re.findall(chk_pattern,chk_src,0))
-        if ( len(re.findall(chk_pattern,chk_src,0)) == (len(self.map_tab.item_struc_name)-1) ):
+        found_myaccount_note_pattern = ( len(re.findall(chk_pattern,chk_src,0)) == (len(self.map_tab.item_struc_name)-1) ) 
+        if (found_myaccount_note_pattern): # the note of non primitive andromoney will not have such pattern 
             chk = False
         else:
             logging.info("Found andromoney primitive format item")
-            if ( item[self.classify_ori.index('分類')] == ANDROMONEY_RSV_CATEGORY):
+            if ( item[self.classify_ori.index('分類')] == ANDROMONEY_RSV_CATEGORY ): # a rsv item in andromoney
                 logging.info("Found andromoney primitive rsv category")
                 chk = False
             else:
                 chk = True
+        
+        # weird part, due to some utf8 translate error from andromoney, some note can be totally disapeared and leave status=14
+        if (type(item[self.classify_ori.index('status')])==float): # sometimes andromoney have nothing in status
+            if ((found_myaccount_note_pattern==0) and item[self.classify_ori.index('status')]==14.0): # I thonk this is how andromoney differentiate non primitive key word
+                logging.info ("GOTTA from andromoney, for non primitive item and utf8 encode error!")
+                chk = False
 
         return chk
     
@@ -69,20 +76,23 @@ class map_item_andromoney(map_item):
         # translate year of the "Republic Era" to AD
         # print (self.classify_ori.index('日期'))
         # print (type(item[self.classify_ori.index('日期')]))
-        tmp = str(item[self.classify_ori.index('日期')])
+        tmp = str(item.iloc[self.classify_ori.index('日期')])
         date_yyyy = tmp[0:4]
         date_mm   = tmp[4:6]         
         date_dd   = tmp[6:8]         
-        item[self.classify_ori.index('日期')] = date_yyyy+"_"+date_mm+"_"+date_dd
+        # item.iloc[self.classify_ori.index('日期')] = date_yyyy+"_"+date_mm+"_"+date_dd # may have potential call by share hazard
+        item.iat[self.classify_ori.index('日期')] = date_yyyy+"_"+date_mm+"_"+date_dd # recommend way
         
         # traslate note to dict
         col2note = ["幣別","付款(轉出)","收款(轉入)","備註","Periodic","專案","商家(公司)","uid","時間"]
         for i in col2note:
             # print (item[self.classify_ori.index(i)])
-            tmp0 = str(item[self.classify_ori.index(i)])
+            tmp0 = str(item.iloc[self.classify_ori.index(i)])
             tmp1 = tmp0.strip()
             tmp2 = re.sub('\r\n'," ",tmp1) # to remove newline case
-            item[self.classify_ori.index(i)] = {i:tmp2}
+            # item.iloc[self.classify_ori.index(i)] = str({i:tmp2})
+            item.iat[self.classify_ori.index(i)] = {i:tmp2}
+            pass
 
         # # rid of "" for string type
         # for i in range(0,len(item)):
@@ -127,7 +137,7 @@ class map_item_andromoney(map_item):
         self.do_classify_map()
         is_1st_item=True 
         for i in range(df.shape[0]):
-            item_mapped = self.do_item_map(df.iloc[i,:])
+            item_mapped = self.do_item_map(df.iloc[i,:]) # please aware of pass by share
             if (item_mapped != None):
                 if (fileout_override and is_1st_item):
                     self.do_item_writeout(self.map_tab.item_struc_name)

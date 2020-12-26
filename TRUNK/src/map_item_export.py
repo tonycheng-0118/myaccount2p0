@@ -46,6 +46,8 @@ class map_item_export():
         to ['Id', '幣別', '金額', '分類', '子分類', '日期', '付款(轉出)', '收款(轉入)', '備註', 'Periodic', '專案', '商家(公司)', 'uid', '時間"']
         '''
         for i in range(self.df_db.shape[0]):
+
+
             df_item = map_item()
             item = [i for i in range(0,len(self.classify_export))]
 
@@ -69,6 +71,7 @@ class map_item_export():
             # for note
             tmp_note0 = {}
             for j in df_item.map_tab.item_struc_name:
+                # print (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]))
                 tmp_note0.update({j:self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]})
             tmp_note1 = str(tmp_note0) # can be recover by eval()
             tmp_note2 = re.sub(',',ANDROMONEY_EXPORT_COMMA_REPLACE,tmp_note1)

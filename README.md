@@ -198,6 +198,8 @@ feature_v1p1
 + dat/andromoney for andromoney import, will be extract the diff first 
 + fix typo type: Electicity, Transpotation, Entertainmant,  
 + rewrite csv import part by using pd.read_csv 
++ add cond to when andromoney's output note have problem
++ fix potential func call by share issue 
 ```
 
 feature_todo

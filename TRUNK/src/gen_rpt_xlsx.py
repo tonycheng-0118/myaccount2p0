@@ -120,7 +120,7 @@ class gen_rpt_xlsx:
         colorFill_error = PatternFill(start_color="00FF0000", end_color="00FF0000", fill_type="solid")
         for i in range(self.all_df.shape[0]):
             line = self.all_df.iloc[i,:]
-            is_duplicated_item = self.all_df.loc[i,'status'] is 'Duplicated'
+            is_duplicated_item = self.all_df.loc[i,'status'] == 'Duplicated'
             #to swap the cell color for adjancnet line
             nxt_date = line['date']
             if (nxt_date != cur_date):
@@ -174,7 +174,7 @@ class gen_rpt_xlsx:
         
         # gen a df for date4diff
         self.wb = load_workbook(self.file_out)
-        if date4diff is "PREVIOUS_ALL_ITEM":
+        if date4diff == "PREVIOUS_ALL_ITEM":
             file_in_path = self.file_4diff+"*.csv"
             file_in_all = glob.glob(file_in_path)
             file_in_all.sort() # always inplace
@@ -290,7 +290,7 @@ class gen_rpt_xlsx:
                         raise TypeError("ERROR!!")
                 elif (is_1st_cell):
                     if (cell.value == None):
-                        if (is_last_cell is False):
+                        if (is_last_cell == False):
                             is_last_cell = True
                         else:
                             logging.error("The type should be continuous!")
@@ -785,8 +785,7 @@ if __name__ == "__main__":
     test.gen_mapped_item_readable_xlsx()
     test.gen_mapped_item_diff_xlsx()
     test.gen_dayaccount_xlsx()
-    # test.gen_monthaccount_xlsx()
-    # test.gen_yearaccount_xlsx()
+
     test.gen_totalaccount_xlsx()
     
     tony_func_proc_disp(msg=" Done test gen_rpt only!!")

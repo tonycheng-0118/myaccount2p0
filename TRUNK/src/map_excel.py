@@ -90,7 +90,7 @@ class map_item_excel(map_item):
         # tmp_date = pd.date_range(start_date,end_date)
         # tmp_date = tmp_date.format(formatter=lambda x: x.strftime('%Y_%m_%d'))
 
-        mydate_vld = [i for i in self.gen_rpt.dayaccount_date_position if i is not 'None']
+        mydate_vld = [i for i in self.gen_rpt.dayaccount_date_position if i != 'None']
         for mydate in mydate_vld:    
             logging.debug(mydate)
             row = self.gen_rpt.locate_dayaccount_date(self.wb[self.sh_active_name],mydate)
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     myexcel = map_item_excel()
     myexcel.gen_rpt.chk_dayaccount_format_option += ['IGNORE_CHK_INVALID_CONTENT']
     file_in_path = "../dat/excel/My_account_old.xlsx"
-    myexcel.sh_active_name = "2016" 
+    myexcel.sh_active_name = "2014" 
     myexcel.do_all_map(file_in=file_in_path,fileout_override=True)
     
     tony_func_proc_disp(msg=" Done gen myexcel to .csv!")

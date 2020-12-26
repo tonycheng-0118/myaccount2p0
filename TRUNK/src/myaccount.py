@@ -38,7 +38,7 @@ class MyWindow(QMainWindow, Ui_MainWindow):
             cur_date = time.strftime("%Y_%m_%d", time.localtime())
             dst_file = "../dat/manual/new_item_" + cur_date + ".csv"
             self.import_file_path, filetype = QFileDialog.getSaveFileName(self,"新檔案",dst_file,"(*csv);; (*.csv)") #最後兩個參數表示只允許顯示擇csv檔
-            if (self.import_file_path is not ""): 
+            if (self.import_file_path != ""): 
                 logging.info ("New: %s, %s" % (self.import_file_path, filetype) )
                 # write out a template
                 self.map_item.file_in  = "None"
