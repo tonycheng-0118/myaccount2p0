@@ -58,14 +58,20 @@ class map_item_andromoney(map_item):
             if ( item[self.classify_ori.index('分類')] == ANDROMONEY_RSV_CATEGORY ): # a rsv item in andromoney
                 logging.info("Found andromoney primitive rsv category")
                 chk = False
+            elif (item[self.classify_ori.index('備註')] == ""): 
+                logging.error("The primitive item of andromoney MUST have something in note.")
+                raise TypeError("Error, please check log!")
             else:
                 chk = True
         
         # weird part, due to some utf8 translate error from andromoney, some note can be totally disapeared and leave status=14
-        if (type(item[self.classify_ori.index('status')])==float): # sometimes andromoney have nothing in status
-            if ((found_myaccount_note_pattern==0) and item[self.classify_ori.index('status')]==14.0): # I thonk this is how andromoney differentiate non primitive key word
-                logging.info ("GOTTA from andromoney, for non primitive item and utf8 encode error!")
-                chk = False
+        # The following cond may fail due to inport-then-export process in andromoney, status of all of item show 14.0
+        # WA is make sure the primitive MUST have someting in note field, otherwise report error!
+        # if (type(item[self.classify_ori.index('status')])==float): # sometimes andromoney have nothing in status
+        #     if ((found_myaccount_note_pattern==0) and item[self.classify_ori.index('status')]==14.0): # I thonk this is how andromoney differentiate non primitive key word
+        #         logging.info ("GOTTA from andromoney, for non primitive item and utf8 encode error!")
+        #         chk = False
+
 
         return chk
     
