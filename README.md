@@ -200,6 +200,7 @@ feature_v1p1
 + rewrite csv import part by using pd.read_csv 
 + add cond to when andromoney's output note have problem, assumed that the note in andromoney item MUST have something!
 + fix potential func call by share issue 
+! Show error log in GUI textBrowser
 ```
 
 feature_todo

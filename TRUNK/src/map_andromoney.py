@@ -59,6 +59,7 @@ class map_item_andromoney(map_item):
                 logging.info("Found andromoney primitive rsv category")
                 chk = False
             elif (item[self.classify_ori.index('備註')] == ""): 
+                logging.info("the primitive item of andromoney: %s" % item)
                 logging.error("The primitive item of andromoney MUST have something in note.")
                 raise TypeError("Error, please check log!")
             else:
