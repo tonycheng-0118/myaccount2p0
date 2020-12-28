@@ -27,6 +27,8 @@ class map_item_manual(map_item):
         """
 
         # because manual item utilizes the format of df, which is little after write out to csv
+        item[self.classify_ori.index('expense')] = int(item[self.classify_ori.index('expense')])
+        item[self.classify_ori.index('income')] = int(item[self.classify_ori.index('income')])
         item[self.classify_ori.index('tag')] = eval(item[self.classify_ori.index('tag')]) #[ i for i in item[self.classify_ori.index('tag')] ] # to pure list
         item[self.classify_ori.index('note')] =  eval(item[self.classify_ori.index('note')]) #{"Note":item[self.classify_ori.index('note')]['Note']} # to pure dict 
 

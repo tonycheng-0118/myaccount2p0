@@ -36,12 +36,11 @@ def gen_map_item_all():
     
     # 2
     tony_func_proc_disp(msg=" Start to gen invoice to .csv!")
-    invoice = map_item_invoice()
-
     file_in_path = "../dat/invoice/*.csv" 
     file_in_all = glob.glob(file_in_path)
     for file_in in file_in_all:   
         logging.info("Processing %s" % file_in) 
+        invoice = map_item_invoice()
         invoice.do_all_map(file_in=file_in,fileout_override=False)
     tony_func_proc_disp(msg=" Done gen invoice to .csv!")
 
@@ -71,21 +70,21 @@ def gen_map_item_all():
     
     # 4
     tony_func_proc_disp(msg=" Start to gen manual to .csv!")
-    manual = map_item_manual()
     file_in_path = "../dat/manual/*.csv" 
     file_in_all = glob.glob(file_in_path)
     for file_in in file_in_all:   
         logging.info("Processing %s" % file_in) 
+        manual = map_item_manual()
         manual.do_all_map(file_in=file_in,fileout_override=False)
     tony_func_proc_disp(msg=" Done gen manual to .csv!")
     
     # 5
     tony_func_proc_disp(msg=" Start to gen andromoney to .csv!")
-    andromoney = map_item_andromoney()
     file_in_path = "../dat/andromoney/*.csv" 
     file_in_all = glob.glob(file_in_path)
     for file_in in file_in_all:   
         logging.info("Processing %s" % file_in) 
+        andromoney = map_item_andromoney()
         andromoney.do_all_map(file_in=file_in,fileout_override=False)
     tony_func_proc_disp(msg=" Done gen andromoney to .csv!")
 

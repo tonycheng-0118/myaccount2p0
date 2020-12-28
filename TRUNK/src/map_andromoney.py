@@ -2,7 +2,6 @@
 # Normalized structure: (which exit in val of dict)
 # {name, data(yyyy_mm_dd), category, type, expense, incomnse, borrow, lend, location, tab#, note}
 
-from numpy.core.numeric import NaN
 from tony_def import *
 from map_item import *
 import pandas as pd
@@ -12,22 +11,22 @@ class map_item_andromoney(map_item):
 
     def __init__(self):
         super().__init__()
-        self.map_tab.add_map_src(dst="name",src="Id")
-        self.map_tab.add_map_src(dst="note",src="幣別")
-        self.map_tab.add_map_src(dst="date",src="日期")
-        self.map_tab.add_map_src(dst="category",src="分類")
-        self.map_tab.add_map_src(dst="type",src="子分類")
-        self.map_tab.add_map_src(dst="expense",src="金額")
-        self.map_tab.add_map_src(dst="income",src="金額") # will be distinguish via type
-        self.map_tab.add_map_src(dst="note",src="付款(轉出)")
-        self.map_tab.add_map_src(dst="note",src="收款(轉入)")
-        self.map_tab.add_map_src(dst="note",src="備註")
-        self.map_tab.add_map_src(dst="note",src="Periodic")
-        self.map_tab.add_map_src(dst="note",src="專案")
-        self.map_tab.add_map_src(dst="note",src="商家(公司)")
-        self.map_tab.add_map_src(dst="note",src="uid")
-        self.map_tab.add_map_src(dst="note",src="時間")
-        self.map_tab.add_map_src(dst="note",src="status")
+        self.map_tab.add_map_src(chk_uniq=False,dst="name",src="Id")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="幣別")
+        self.map_tab.add_map_src(chk_uniq=False,dst="date",src="日期")
+        self.map_tab.add_map_src(chk_uniq=False,dst="category",src="分類")
+        self.map_tab.add_map_src(chk_uniq=False,dst="type",src="子分類")
+        self.map_tab.add_map_src(chk_uniq=False,dst="expense",src="金額")
+        self.map_tab.add_map_src(chk_uniq=False,dst="income",src="金額") # will be distinguish via type
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="付款(轉出)")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="收款(轉入)")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="備註")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="Periodic")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="專案")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="商家(公司)")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="uid")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="時間")
+        self.map_tab.add_map_src(chk_uniq=False,dst="note",src="status")
 
 
     def do_item_map_preparse(self,file_in,file_out):
@@ -84,6 +83,10 @@ class map_item_andromoney(map_item):
         # translate year of the "Republic Era" to AD
         # print (self.classify_ori.index('日期'))
         # print (type(item[self.classify_ori.index('日期')]))
+        item.iat[self.classify_ori.index('Id')] = str(item.iloc[self.classify_ori.index('Id')]) 
+        item.iat[self.classify_ori.index('金額')] = int(item.iloc[self.classify_ori.index('金額')]) 
+        item.iat[self.classify_ori.index('status')] = str(item.iloc[self.classify_ori.index('status')]) 
+        
         tmp = str(item.iloc[self.classify_ori.index('日期')])
         date_yyyy = tmp[0:4]
         date_mm   = tmp[4:6]         

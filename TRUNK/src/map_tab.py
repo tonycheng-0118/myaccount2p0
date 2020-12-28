@@ -324,24 +324,25 @@ class map_item_struction:
                 pass
         return "NA"
 
-    def add_map_src(self,dst="NA",src="NA"):
+    def add_map_src(self,dst="NA",src="NA",chk_uniq=True):
         """
         dst: Normalized structure, src: original classify
         """
         self.map_dict[dst].append(src)
-        self.chk_map_dict_uniq()
+        self.chk_map_dict_uniq(chk_uniq)
 
-    def chk_map_dict_uniq(self):
+    def chk_map_dict_uniq(self,chk_uniq=True):
         """
         to check the uniquence of classify before map
         """
-        a_list = []
-        for v in self.map_dict.values():
-            a_list+=v # using append will not merge the list content
-        duplicate_list = [ i for i in a_list if (a_list.count(i)>1)] # find out the dupplicated member
-        duplicate_list = set(duplicate_list) # unique the duplicated one
-        # logging.debug(a_list)
-        logging.error("Those classify is dulicated!! %s" % str(duplicate_list)) if len(duplicate_list)>0 else 0
+        if (chk_uniq):
+            a_list = []
+            for v in self.map_dict.values():
+                a_list+=v # using append will not merge the list content
+            duplicate_list = [ i for i in a_list if (a_list.count(i)>1)] # find out the dupplicated member
+            duplicate_list = set(duplicate_list) # unique the duplicated one
+            # logging.debug(a_list)
+            logging.error("Those classify is dulicated!! %s" % str(duplicate_list)) if len(duplicate_list)>0 else 0
 
     def chk_item_type(self,item_type):
         """

@@ -437,6 +437,9 @@ d. To rename/delete the existed *.csv
         self.progressBar_genrpt.setValue(90)
         rpt.gen_totalaccount_xlsx()
         self.progressBar_genrpt.setValue(100)
+
+        # show error log
+        self.do_grep_error_log()
         
         # Finish msg
         msg = QMessageBox()

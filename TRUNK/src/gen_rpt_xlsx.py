@@ -785,7 +785,6 @@ if __name__ == "__main__":
     test.gen_mapped_item_readable_xlsx()
     test.gen_mapped_item_diff_xlsx()
     test.gen_dayaccount_xlsx()
-
     test.gen_totalaccount_xlsx()
     
     tony_func_proc_disp(msg=" Done test gen_rpt only!!")
