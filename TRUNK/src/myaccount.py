@@ -445,6 +445,22 @@ d. To rename/delete the existed *.csv
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         ret = msg.exec()
 
+    def do_grep_error_log(self):
+        file_log = "./"+TONY_LOG_NAME
+        error_str = ""
+        line_num = 0
+        with open(file_log, 'r', newline='', encoding='UTF-8-sig') as csvfile:
+            for line in csvfile:
+                chk_pattern = r"^\[ERROR\]"
+                if ( re.match(chk_pattern,line,0) ):
+                    # print (line)
+                    error_str += str(line_num) + ":" + line
+                line_num += 1
+        
+        if (error_str != ""):
+            self.textBrowser_item_list.clear()
+            self.textBrowser_item_list.append(error_str)
+
 
              
 if __name__ == "__main__":
