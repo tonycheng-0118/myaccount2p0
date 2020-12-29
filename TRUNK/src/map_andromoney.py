@@ -59,7 +59,7 @@ class map_item_andromoney(map_item):
                 chk = False
             elif (item[self.classify_ori.index('備註')] == ""): 
                 logging.info("the primitive item of andromoney: %s" % item)
-                logging.error("The primitive item of andromoney MUST have something in note.")
+                logging.error("This item is ignored. The primitive item of andromoney MUST have something in note.")
                 # raise TypeError("Error, please check log!")
                 chk = False
             else:

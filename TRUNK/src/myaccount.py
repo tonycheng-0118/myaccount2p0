@@ -452,8 +452,8 @@ d. To rename/delete the existed *.csv
         file_log = "./"+TONY_LOG_NAME
         error_str = ""
         line_num = 0
-        with open(file_log, 'r', newline='', encoding='UTF-8-sig') as csvfile:
-            for line in csvfile:
+        with open(file_log, 'r', newline='') as logfile:
+            for line in logfile:
                 chk_pattern = r"^\[ERROR\]"
                 if ( re.match(chk_pattern,line,0) ):
                     # print (line)
