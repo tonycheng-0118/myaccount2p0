@@ -70,9 +70,10 @@ class map_item_export():
                 item[self.classify_export.index('收款(轉入)')]  = ""
             # for note
             tmp_note0 = {}
-            self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("note")] = re.sub(','," ",self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("note")])
             for j in df_item.map_tab.item_struc_name:
                 # print (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]))
+                if (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]) == str):
+                    self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)] = re.sub(',',"##",self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)])
                 tmp_note0.update({j:self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]})
             tmp_note1 = str(tmp_note0) # can be recover by eval()
             tmp_note2 = re.sub(',',ANDROMONEY_EXPORT_COMMA_REPLACE,tmp_note1)
