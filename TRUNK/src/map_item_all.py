@@ -29,9 +29,9 @@ def gen_map_item_all():
         littlebox = map_item_littlebox()
         if (is_first_writeout):
             littlebox.do_all_map(file_in=file_in,fileout_override=True)
+            is_first_writeout = False
         else:
             littlebox.do_all_map(file_in=file_in,fileout_override=False)
-            is_first_writeout = False
     tony_func_proc_disp(msg=" Done gen littlebox to .csv!")
     
     # 2

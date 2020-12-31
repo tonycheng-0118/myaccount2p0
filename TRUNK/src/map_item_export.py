@@ -70,6 +70,7 @@ class map_item_export():
                 item[self.classify_export.index('收款(轉入)')]  = ""
             # for note
             tmp_note0 = {}
+            self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("note")] = re.sub(','," ",self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("note")])
             for j in df_item.map_tab.item_struc_name:
                 # print (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]))
                 tmp_note0.update({j:self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]})
@@ -80,7 +81,8 @@ class map_item_export():
             item[self.classify_export.index('專案')]        = "" # for differenciation from myaccount and andromoney
             item[self.classify_export.index('商家(公司)')]  = "" # self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("location")]
             item[self.classify_export.index('uid')]         = "" 
-            item[self.classify_export.index('時間')]        = TONY_CURRENT_TIME 
+            item[self.classify_export.index('時間')]        = TONY_CURRENT_TIME
+            # print (str(item)) 
               
             if (self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("status")] == ANDROMONEY_VALID_KEYWD):
                 note = eval(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("note")])
