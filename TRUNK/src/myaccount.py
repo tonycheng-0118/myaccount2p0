@@ -413,7 +413,9 @@ d. To rename/delete the existed *.csv
         
         self.progressBar_genrpt.setValue(0)
 
-        # 0 
+        # 0 clear gui 
+        self.textBrowser_item_list.clear()
+        self.textBrowser_file_path.clear()
         self.progressBar_genrpt.setValue(10)
 
         # 1 gen .all.csv
