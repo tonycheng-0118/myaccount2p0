@@ -69,15 +69,16 @@ class map_item_export():
                 item[self.classify_export.index('付款(轉出)')]  = "現金"
                 item[self.classify_export.index('收款(轉入)')]  = ""
             # for note
-            tmp_note0 = {}
-            for j in df_item.map_tab.item_struc_name:
-                # print (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]))
-                if (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]) == str):
-                    self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)] = re.sub(',',"##",self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)])
-                tmp_note0.update({j:self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]})
-            tmp_note1 = str(tmp_note0) # can be recover by eval()
-            tmp_note2 = re.sub(',',ANDROMONEY_EXPORT_COMMA_REPLACE,tmp_note1)
-            item[self.classify_export.index('備註')]        = tmp_note2 # for andromoney reverse to myaccount usage
+            if (self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("status")] != ANDROMONEY_VALID_KEYWD):
+                tmp_note0 = {}
+                for j in df_item.map_tab.item_struc_name:
+                    # print (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]))
+                    if (type(self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]) == str):
+                        self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)] = re.sub(',',"##",self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)])
+                    tmp_note0.update({j:self.df_db.iloc[i,df_item.map_tab.item_struc_name.index(j)]})
+                tmp_note1 = str(tmp_note0) # can be recover by eval()
+                tmp_note2 = re.sub(',',ANDROMONEY_EXPORT_COMMA_REPLACE,tmp_note1)
+                item[self.classify_export.index('備註')]        = tmp_note2 # for andromoney reverse to myaccount usage
             item[self.classify_export.index('Periodic')]    = ""
             item[self.classify_export.index('專案')]        = "" # for differenciation from myaccount and andromoney
             item[self.classify_export.index('商家(公司)')]  = "" # self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("location")]
