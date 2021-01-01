@@ -177,12 +177,14 @@ class gen_rpt_xlsx:
         if date4diff == "PREVIOUS_ALL_ITEM":
             file_in_path = self.file_4diff+"*.csv"
             file_in_all = glob.glob(file_in_path)
-            file_in_all.sort() # always inplace
-            logging.debug("All of mapped_all_item is %s" % file_in_all)
-            if (len(file_in_all) < 2):
+            r = re.compile(".*mapped_item_\d{4}_\d{2}_\d{2}.all.csv")
+            file_in_legal = list(filter(r.match, file_in_all)) # Read Note
+            file_in_legal.sort() # always inplace
+            logging.debug("All of mapped_all_item is %s" % file_in_legal)
+            if (len(file_in_legal) < 2):
                 logging.error("No previous all_item is available!!")
                 raise TypeError("Error")
-            self.file_4diff = file_in_all[-2] # -1 is the all_item of current date
+            self.file_4diff = file_in_legal[-2] # -1 is the all_item of current date
         else:
             self.file_4diff += "mapped_item_" + date4diff + ".all.csv"
         logging.debug("File for diff is %s" % self.file_4diff)
@@ -191,8 +193,14 @@ class gen_rpt_xlsx:
         # diff two df
         tmp_pd = pd.concat([self.all_df,diff_df])
         # tmp_pd.sort_values(by=['date','type','expense'],ascending=[True,True,False],inplace=True)
-        logging.debug ("the tmp_pd               %s" % tmp_pd)
+        logging.debug ("the tmp_pd               %s" % str(tmp_pd))
+        for iii in range(tmp_pd.shape[0]):
+            logging.debug (str(tmp_pd.iloc[iii,:]))
         logging.debug ("the index not duplicated %s" % tmp_pd.astype(str).drop_duplicates(keep=False).index)
+        not_duplicate_idx = tmp_pd.astype(str).drop_duplicates(keep=False).index
+        for iii in not_duplicate_idx:
+            logging.debug (iii)
+            logging.debug (str(tmp_pd.iloc[iii,:]))
         logging.debug ("the index duplicated index %s" % tmp_pd.astype(str).duplicated(keep=False))
         self.diff_df = tmp_pd.iloc[tmp_pd.astype(str).drop_duplicates(keep=False).index] # change type to str -> drop duplcate -> rtn the index 
         logging.debug ("the diff_df                %s" % self.diff_df                   )
