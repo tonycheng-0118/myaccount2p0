@@ -242,4 +242,4 @@ source_code_structure
         the gen .all.item based on different source
 
     map_tab.py
-        the mapping tab bwt ori and mapped
+        the mapping tab bwt ori and mapped 
