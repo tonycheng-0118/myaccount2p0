@@ -27,6 +27,8 @@ class map_item_andromoney(map_item):
         self.map_tab.add_map_src(chk_uniq=False,dst="note",src="uid")
         self.map_tab.add_map_src(chk_uniq=False,dst="note",src="時間")
         self.map_tab.add_map_src(chk_uniq=False,dst="note",src="status")
+        self.chk_andromoney_number = 0 # use to double chk the integrity of the export and import process of andromoney 
+        self.chk_andromoney_sum = 0 # use to double chk the integrity of the export and import process of andromoney
 
 
     def do_item_map_preparse(self,file_in,file_out):
@@ -99,6 +101,8 @@ class map_item_andromoney(map_item):
         for i in col2note:
             # print (item[self.classify_ori.index(i)])
             tmp0 = str(item.iloc[self.classify_ori.index(i)])
+            if (i=="備註" and type(item.iloc[self.classify_ori.index(i)])==str):
+                tmp0 = re.sub('"',"",tmp0) # to remove repeat ""
             tmp1 = tmp0.strip()
             tmp2 = re.sub('\r\n'," ",tmp1) # to remove newline case
             # item.iloc[self.classify_ori.index(i)] = str({i:tmp2})
@@ -143,6 +147,9 @@ class map_item_andromoney(map_item):
         df.fillna("",inplace=True)
         # print (df)
 
+        # update chk 
+        self.chk_andromoney_number = df.shape[0]
+        self.chk_andromoney_sum = int(df['金額'].sum())
 
         self.classify_ori = [i for i in df.columns]
         self.do_classify_map()
@@ -185,7 +192,7 @@ class map_item_andromoney(map_item):
 if __name__ == "__main__":
     tony_func_proc_disp(msg=" Start to gen andromoney to .csv!")
     andromoney = map_item_andromoney()
-    file_in_path = "../dat/andromoney/AndroMoney_test_example.csv" 
+    file_in_path = "../dat/andromoney/AndroMoney.csv" 
     andromoney.do_all_map(file_in=file_in_path,fileout_override=True)
 
     tony_func_proc_disp(msg=" Done gen andromoney to .csv!")

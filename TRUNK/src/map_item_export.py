@@ -53,7 +53,7 @@ class map_item_export():
 
             item[self.classify_export.index('Id')]          = self.df_db.index.values[i] 
             item[self.classify_export.index('幣別')]        = "TWD" 
-            item[self.classify_export.index('金額')]        = self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("expense")] 
+            item[self.classify_export.index('金額')]        = self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("expense")] # income is not used 
             item[self.classify_export.index('分類')]        = self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("category")] 
             item[self.classify_export.index('子分類')]      = self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("type")] 
             item[self.classify_export.index('日期')]        = self.df_db.iloc[i,df_item.map_tab.item_struc_name.index("date")][0:4] + \
@@ -107,6 +107,7 @@ class map_item_export():
         self.df_db = pd.read_csv(self.file_in,index_col=False)
         copyfile(src=self.file_ref, dst=self.file_out)
         self.do_item_map()
+        tony_func_proc_disp(msg=" Done export! Please check num: %s and sum: %s with the import andromoney csv!" % (self.df_db.shape[0],int(self.df_db['expense'].sum())))
 
              
 if __name__ == "__main__":

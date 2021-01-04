@@ -86,7 +86,7 @@ def gen_map_item_all():
         logging.info("Processing %s" % file_in) 
         andromoney = map_item_andromoney()
         andromoney.do_all_map(file_in=file_in,fileout_override=False)
-    tony_func_proc_disp(msg=" Done gen andromoney to .csv!")
+        tony_func_proc_disp(msg=" Done gen %s to .csv! Please check num: %s and sum: %s with the export andromoney csv!" % (file_in,andromoney.chk_andromoney_number,andromoney.chk_andromoney_sum))
 
     
     #### for year in range(2014,2021,1): 
